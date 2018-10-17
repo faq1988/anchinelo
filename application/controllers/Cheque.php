@@ -10,17 +10,17 @@ public function __construct()
 }
 
 	
+//estados de un cheque: cartera, aplicado, rechazado, anulado
 
   public function crear_cheque()
-  {
-
+  {    
       $this->form_validation->set_rules('fecha_salida', 'Fecha de salida', 'required');
       $this->form_validation->set_rules('fecha_cheque', 'Fecha de cheque', 'required');
       $this->form_validation->set_rules('fecha_pago', 'Fecha de pago', 'required');
       $this->form_validation->set_rules('chequera', 'Chequera', 'required');
       $this->form_validation->set_rules('nro_cheque', 'Número de cheque', 'required');
-      $this->form_validation->set_rules('titular', 'Titular', 'required');
-      $this->form_validation->set_rules('banco_emision', 'Banco', 'required');
+      //$this->form_validation->set_rules('titular', 'Titular', 'required');
+      //$this->form_validation->set_rules('banco_emision', 'Banco', 'required');
       $this->form_validation->set_rules('monto', 'Monto', 'required|numeric|greater_than[0]');
       $this->form_validation->set_rules('proveedor', 'Proveedor', 'required');
       $this->form_validation->set_rules('nro_factura', 'Número de factura', 'required');
@@ -51,6 +51,7 @@ public function __construct()
       'proveedor' => $this->input->post('proveedor'),
       'nro_factura' => $this->input->post('nro_factura'),
       'nota' => $this->input->post('nota'),
+      'estado' => "A PAGAR",
       );
 
         $this->cheque_model->crear_cheque($data);
@@ -120,7 +121,42 @@ public function __construct()
   }
 
 
+  public function crear_proveedor()
+  {
 
+      $this->form_validation->set_rules('nombre_apellido', 'Razón social', 'required');
+      
+      
+      if ($this->form_validation->run() == FALSE)      
+      {                   
+          $this -> load -> view('header');
+          $this -> load -> view('menu');
+          $this -> load -> view('nuevo_proveedor');
+      } 
+      else
+      {
+        $data = array(
+      
+      'nombre_apellido' => $this->input->post('nombre_apellido'),
+      'domicilio' => $this->input->post('domicilio'),
+      'telefono' => $this->input->post('telefono'),
+      
+      
+      );
+
+        $this->cheque_model->crear_proveedor($data);
+        redirect("welcome/proveedores");
+      }
+
+  }
+
+
+    public function eliminar_proveedor()
+  {
+    $id_proveedor = $this->uri->segment(3);       
+    $this->cheque_model->eliminar_proveedor($id_proveedor);
+    redirect('Welcome/proveedores');
+  }
 
   public function crear_cliente()
   {

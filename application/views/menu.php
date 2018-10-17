@@ -21,6 +21,7 @@
             <li><a href="<?=base_url()?>welcome/cheques_terceros"><i class="fa fa-arrow-right"></i> Cheques de terceros</a></li>
             <li><a href="<?=base_url()?>welcome/chequeras"><i class="fa fa-newspaper-o"></i> Chequeras</a></li>
             <li><a href="<?=base_url()?>welcome/clientes"><i class="fa fa-group"></i> Clientes</a></li>
+            <li><a href="<?=base_url()?>welcome/proveedores"><i class="fa fa-cart-plus"></i> Proveedores</a></li>
             <li><a href="<?=base_url()?>welcome/cuentas"><i class="fa fa-dollar"></i> Cuentas</a></li>
           </ul>
         </li>

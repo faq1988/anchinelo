@@ -1,24 +1,20 @@
-
-
-  <!-- Content Wrapper. Contains page content -->
+<!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Cheques Propios
+        Cheques propios
         
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Panel</a></li>
-        <li class="active">Cheques propios</li>
+        <li><a href="#">Cheques propios</a></li>
+        
       </ol>
     </section>
 
-
-
     <!-- Main content -->
     <section class="content">
-
 
 
 <div class="row">
@@ -29,10 +25,7 @@
   </a>
 </div>
 </div>
-</div>      
-
-
-
+</div> 
 
 <!--div class="table-responsive placa not-mobile"-->
 <div class="row">
@@ -55,9 +48,12 @@
         <tbody>
           <tr>
             <td><b>Cantidad en $</b></td>
-            <td class="success ng-binding">$0,00</td><td class="warning ng-binding">$0,00</td>
-            <td class="warning ng-binding">$0,00</td><td class="warning ng-binding">$0,00</td>
-            <td class="warning ng-binding">$0,00</td><td class="warning ng-binding">$0,00</td>
+            <td class="success ng-binding">$ <?php echo ''.$monto_hoy;?></td>
+            <td class="warning ng-binding">$ <?php echo ''.$monto_1a7;?></td>
+            <td class="warning ng-binding">$ <?php echo ''.$monto_8a15;?></td>
+            <td class="warning ng-binding">$ <?php echo ''.$monto_16a30;?></td>
+            <td class="warning ng-binding">$ <?php echo ''.$monto_31a60;?></td>
+            <td class="warning ng-binding">$ <?php echo ''.$monto_mas60;?></td>
             <td class="info ng-binding">$0,00</td>
           </tr>
             <tr>
@@ -75,20 +71,24 @@
 
 
 
-      <!-- /.row -->
-      <!-- Main row -->
-      <div class="row">
 
-        
+
+
+
+      <div class="row">
         <div class="col-xs-12">
+          
+         
+
           <div class="box">
+
             
             <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table id="tablachequespropios" class="table table-hover">
-                <tbody>
-                  <tr>
-                  <th>ID</th>
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                   <th>ID</th>
                   <th>Estado</th>
                   <th>Fecha de cheque</th>
                   <th>Fecha de pago</th>                  
@@ -98,17 +98,19 @@
                   <th>Monto</th>
                   <th>Banco</th>
                   <th>Proveedor</th>
+                  
                 </tr>
-
-                 <?php
+                </thead>
+                <tbody>
+                
+               <?php
                     if (isset($cheques)){
                      for($i=0; $i<count($cheques); $i++){ 
                   ?>
-
+               
                 <tr>
                   <td><?php echo $cheques[$i]['id'];?></td>
-
-                <td>
+                  <td>
                   <div class="btn-group">
                   <button type="button" class="btn btn-success btn-xs"><?php echo $cheques[$i]['estado'];?></button>
                   <button type="button" class="btn btn-success dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
@@ -121,12 +123,10 @@
                     <li><a href="#">Pagar</a></li>
                     <li><a href="#">Rechazar</a></li>
                     <li class="divider"></li>
-                    <li><a href="#">Eliminar</a></li>
+                    <li><a href="<?php echo base_url() ?>Cheque/eliminar_cheque/<?php echo $cheques[$i]['id']; ?>">Eliminar</a></li>
                   </ul>
                 </div>
                 </td>
-                  
-                  
                   <td><?php echo $cheques[$i]['fecha_cheque'];?></td>
                   <td><?php echo $cheques[$i]['fecha_pago'];?></td>
                   <td><?php echo $cheques[$i]['chequera'];?></td>
@@ -135,97 +135,92 @@
                   <td>$ <?php echo $cheques[$i]['monto'];?></td>
                   <td><?php echo $cheques[$i]['banco_emision'];?></td>
                   <td><?php echo $cheques[$i]['proveedor'];?></td>
-                  <td>
-                                <a href="<?php echo base_url() ?>Cheque/eliminar_cheque/<?php echo $cheques[$i]['id']; ?>"> <i title="Eliminar" class="fa fa-fw fa-trash-o"></i></a>
-                                
-                              </td>
+                  
                 </tr>
-                <?php } }?>
 
-              </tbody></table>
+                 <?php } }?>
+                </tbody>
+                <!--tfoot>
+                <tr>
+                    <th>ID</th>
+                  <th>Estado</th>
+                  <th>Fecha de cheque</th>
+                  <th>Fecha de pago</th>                  
+                  <th>Chequera</th>
+                  <th>Titular</th>
+                  <th>Nro de cheque</th>
+                  <th>Monto</th>
+                  <th>Banco</th>
+                  <th>Proveedor</th>
+                </tr>
+                </tfoot-->
+              </table>
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
         </div>
-      
-        
+        <!-- /.col -->
       </div>
-      <!-- /.row (main row) -->
-
+      <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 1.0.0
-    </div>
-    <strong>Copyright &copy; 2018 <a href="#">Facundo Carignano</a>.</strong> Todos los derechos reservados.
-  </footer>
-
- 
   
+   <?php
+       include "footer.php";
+   ?>
+
+  <!-- Control Sidebar -->
+  
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
 <script src="<?=base_url()?>assets_template/bower_components/jquery/dist/jquery.min.js"></script>
-
-<!-- jQuery UI 1.11.4 -->
-<script src="<?=base_url()?>assets_template/bower_components/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?=base_url()?>assets_template/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- Morris.js charts -->
-<script src="<?=base_url()?>assets_template/bower_components/raphael/raphael.min.js"></script>
-
-<!-- Sparkline -->
-<script src="<?=base_url()?>assets_template/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-<!-- jvectormap -->
-<script src="<?=base_url()?>assets_template/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="<?=base_url()?>assets_template/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="<?=base_url()?>assets_template/bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
-<!-- daterangepicker -->
-<script src="<?=base_url()?>assets_template/bower_components/moment/min/moment.min.js"></script>
-<script src="<?=base_url()?>assets_template/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
-<script src="<?=base_url()?>assets_template/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="<?=base_url()?>assets_template/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<!-- Slimscroll -->
+<!-- DataTables -->
+<script src="<?=base_url()?>assets_template/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="<?=base_url()?>assets_template/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- SlimScroll -->
 <script src="<?=base_url()?>assets_template/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="<?=base_url()?>assets_template/bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="<?=base_url()?>assets_template/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<!-- DataTables -->
-<script src="<?=base_url()?>assets_template/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="<?=base_url()?>assets_template/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-
 <!-- AdminLTE for demo purposes -->
-<script src="<?=base_url()?>assets_template/dist/js/demo.js"></script>
-
+<!--script src="<?=base_url()?>assets_template/dist/js/demo.js"></script-->
+<!-- page script -->
 <script>
   $(function () {
+    $('#example1').DataTable({
+
+      "language": {
+        "sSearch":        "Buscar:", 
+                "oPaginate": {              
+                "sNext":    "Siguiente",
+                "sPrevious": "Anterior"                          
+                },
+            },
     
-    $('#tablachequespropios').DataTable({
+
+
       'paging'      : true,
       'lengthChange': false,
-      'searching'   : false,
+      'searching'   : true,
       'ordering'    : true,
-      'info'        : true,
+      'info'        : false,
       'autoWidth'   : false
-    })
+
+
+        })
   })
 </script>
-
-
-
 </body>
 </html>

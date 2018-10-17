@@ -83,13 +83,39 @@ class Welcome extends CI_Controller {
     $this->load->model('cheque_model');
     $lista_cheques=  $this->cheque_model->obtener_cheques();
 
+	date_default_timezone_set('America/Argentina/Buenos_Aires');
+    $begin_date = date( 'Y-m-d', strtotime( 'today' ) );
+    $end_date = $begin_date;    
+    $monto_hoy = $this->cheque_model->obtener_monto_a_cubrir($begin_date, $end_date);
+    $begin_date = date( 'Y-m-d', strtotime( '+1 day' ) );
+    $end_date = date( 'Y-m-d', strtotime( '+8 day' ) );
+    $monto_1a7 = $this->cheque_model->obtener_monto_a_cubrir($begin_date, $end_date);
+    $begin_date = date( 'Y-m-d', strtotime( '+9 day' ) );
+    $end_date = date( 'Y-m-d', strtotime( '+22 day' ) );
+    $monto_8a15 = $this->cheque_model->obtener_monto_a_cubrir($begin_date, $end_date);
+    $begin_date = date( 'Y-m-d', strtotime( '+23 day' ) );
+    $end_date = date( 'Y-m-d', strtotime( '+45 day' ) );
+    $monto_16a30 = $this->cheque_model->obtener_monto_a_cubrir($begin_date, $end_date);
+    $begin_date = date( 'Y-m-d', strtotime( '+46 day' ) );
+    $end_date = date( 'Y-m-d', strtotime( '+90 day' ) );
+    $monto_31a60 = $this->cheque_model->obtener_monto_a_cubrir($begin_date, $end_date);
+    $begin_date = date( 'Y-m-d', strtotime( '+91 day' ) );
+    $end_date = date( 'Y-m-d', strtotime( '+360 day' ) );
+    $monto_mas60 = $this->cheque_model->obtener_monto_a_cubrir($begin_date, $end_date);
+
     if (isset($lista_cheques))
     	$data['cheques']= $lista_cheques->result_array();
+    $data['monto_hoy']= $monto_hoy;
+    $data['monto_1a7']= $monto_1a7;
+    $data['monto_8a15']= $monto_8a15;
+    $data['monto_16a30']= $monto_16a30;
+    $data['monto_31a60']= $monto_31a60;
+    $data['monto_mas60']= $monto_mas60;
 
     $this->load->view('header');
 	$this->load->view('menu');
-	//$this->load->view('cheques_propios', $data);
-	$this->load->view('datatables', $data);
+	$this->load->view('cheques_propios', $data);
+	
   }
 
 
@@ -188,6 +214,37 @@ class Welcome extends CI_Controller {
      $this -> load -> view('header');
      $this -> load -> view('menu');
 	 $this -> load -> view('nuevo_cliente');
+  }
+
+  public function proveedores()
+  {
+  	if (!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }
+	$data=array();
+    $this->load->model('cheque_model');
+    $lista_proveedores=  $this->cheque_model->obtener_proveedores();
+
+    if (isset($lista_proveedores))
+    	$data['proveedores']= $lista_proveedores->result_array();
+
+    $this->load->view('header');
+	$this->load->view('menu');
+	$this->load->view('proveedores', $data);
+  }
+
+
+   public function nuevo_proveedor()
+  {
+  	if (!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }
+
+     $this -> load -> view('header');
+     $this -> load -> view('menu');
+	 $this -> load -> view('nuevo_proveedor');
   }
 
 
