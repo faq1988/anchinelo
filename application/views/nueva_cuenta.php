@@ -9,7 +9,7 @@
         
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Transporte JyG</a></li>
         <li class="active">Nueva cuenta</li>
       </ol>
     </section>
@@ -43,23 +43,24 @@
             
 
                  <div class="form-group">
-                  <label for="exampleInputEmail1">Tipo de cuenta</label>
+                  <label for="tipo_cuenta">Tipo de cuenta</label>
               
                   <select name="tipo_cuenta" class="form-control">                      
-                    <option value="-1">Seleccionar tipo</option>
+                    <option value="<?php echo set_value('tipo_cuenta'); ?>">Seleccionar tipo</option>
                     <option value="BANCO">BANCO</option>
                     <option value="EFECTIVO">CAJA</option>
                             
                   </select>  
+                   <?php echo form_error('tipo_cuenta', '<span style="color:red">', '</span>'); ?>
                 </div>
 
 
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Banco</label>
+                  <label for="banco">Banco</label>
               
                   <select name="banco" class="form-control">                      
-                    <option value="-1">Seleccionar banco</option>
+                    <option value="<?php echo set_value('banco'); ?>">Seleccionar banco</option>
                             <?php
                               if (isset($bancos)){
                                for($i=0; $i<sizeof($bancos); $i++){ ?>
@@ -70,6 +71,7 @@
                               
                               <?php } }?>                                                                                      
                   </select>  
+                   <?php echo form_error('banco', '<span style="color:red">', '</span>'); ?>
                 </div>
 
 
@@ -77,13 +79,17 @@
                   <label for="exampleInputEmail1">Titular</label>
                   <input class="form-control" id="exampleInputEmail1" name="titular" placeholder="Titular" type="text"
                   value="<?php echo set_value('titular'); ?>">
+                   <?php echo form_error('titular', '<span style="color:red">', '</span>'); ?>
                 </div>
 
               </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <center>
+                <a class="btn btn-success" href="<?=base_url()?>welcome/cuentas">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Guardar</button>                
+                </center>
               </div>
             </form>
           </div>

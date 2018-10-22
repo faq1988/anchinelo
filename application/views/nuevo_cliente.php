@@ -35,31 +35,36 @@
 
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Razón social</label>
-                  <input class="form-control" id="exampleInputEmail1" name="nombre_apellido" placeholder="Razón social" type="text"
+                  <label for="nombre_apellido">Razón social</label>
+                  <input class="form-control" id="nombre_apellido" name="nombre_apellido" placeholder="Razón social" type="text"
                   value="<?php echo set_value('nombre_apellido'); ?>">
                   <?php echo form_error('nombre_apellido', '<span style="color:red">', '</span>'); ?>
                 </div>
             
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Domicilio</label>
-                  <input class="form-control" id="exampleInputEmail1" name="domicilio" placeholder="Domicilio" type="text"
+                  <label for="domicilio">Domicilio</label>
+                  <input class="form-control" id="domicilio" name="domicilio" placeholder="Domicilio" type="text"
                   value="<?php echo set_value('domicilio'); ?>">
+                   <?php echo form_error('domicilio', '<span style="color:red">', '</span>'); ?>
                 </div>
 
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Teléfono</label>
-                  <input class="form-control" id="exampleInputEmail1" name="telefono" placeholder="Teléfono" type="text"
+                  <label for="telefono">Teléfono</label>
+                  <input class="form-control" id="telefono" name="telefono" placeholder="Teléfono" type="text"
                   value="<?php echo set_value('telefono'); ?>">
+                   <?php echo form_error('telefono', '<span style="color:red">', '</span>'); ?>
                 </div>
 
               </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
+                <center>
+                <a class="btn btn-success" href="<?=base_url()?>welcome/clientes">Cancelar</a>
                 <button type="submit" class="btn btn-primary">Guardar</button>
+                </center>
               </div>
             </form>
           </div>

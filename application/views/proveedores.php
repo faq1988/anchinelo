@@ -3,12 +3,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Cuentas
+        Proveedores
         
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Transporte JyG</a></li>
-        <li><a href="#">Cuentas</a></li>
+        <li><a href="#">Proveedores</a></li>
         
       </ol>
     </section>
@@ -20,8 +20,8 @@
 <div class="row">
 <div class="col-lg-2">
 <div class="box">
-  <a href="<?=base_url()?>Welcome/nueva_cuenta" type="button" class="btn btn-block btn-primary">
-    <i class="fa fa-plus"></i> Nueva Cuenta
+  <a href="<?=base_url()?>Welcome/nuevo_proveedor" type="button" class="btn btn-block btn-primary">
+    <i class="fa fa-plus"></i> Nuevo Proveedor
   </a>
 </div>
 </div>
@@ -43,11 +43,10 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                   <th>ID</th>                  
-                  <th>Nombre</th>
-                  <th>Tipo</th>
-                  <th>Banco</th>                  
-                  <th>Titular</th>
+                   <th>ID</th>
+                  <th>Razón social</th>
+                  <th>Domicilio</th>
+                  <th>Teléfono</th> 
                   <th></th>
                   
                 </tr>
@@ -55,18 +54,17 @@
                 <tbody>
                 
                <?php
-                    if (isset($cuentas)){
-                     for($i=0; $i<count($cuentas); $i++){ 
+                    if (isset($proveedores)){
+                     for($i=0; $i<count($proveedores); $i++){ 
                   ?>
                
                 <tr>
                   
                   
-                  <td><?php echo $cuentas[$i]['id'];?></td>                  
-                  <td><?php echo $cuentas[$i]['nombre'];?></td>
-                  <td><?php echo $cuentas[$i]['tipo_cuenta'];?></td>
-                  <td><?php echo $cuentas[$i]['banco'];?></td>
-                  <td><?php echo $cuentas[$i]['titular'];?></td>
+                  <td><?php echo $proveedores[$i]['id'];?></td>                  
+                  <td><?php echo $proveedores[$i]['nombre_apellido'];?></td>
+                  <td><?php echo $proveedores[$i]['domicilio'];?></td>
+                  <td><?php echo $proveedores[$i]['telefono'];?></td>
                   
                   <td>
                   <div class="btn-group">
@@ -81,7 +79,7 @@
                     <li><a href="#">Pagar</a></li>
                     <li><a href="#">Rechazar</a></li>
                     <li class="divider"></li>
-                    <li><a href="<?php echo base_url() ?>Cheque/eliminar_cuenta/<?php echo $cuentas[$i]['id']; ?>">Eliminar</a></li>
+                    <li><a href="<?php echo base_url() ?>Cheque/eliminar_proveedor/<?php echo $proveedores[$i]['id']; ?>">Eliminar</a></li>
                   </ul>
                 </div>
                 </td>

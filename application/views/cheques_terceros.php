@@ -3,12 +3,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Cheques propios
+        Cheques de terceros
         
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Panel</a></li>
-        <li><a href="#">Cheques propios</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Transporte JyG</a></li>
+        <li><a href="#">Cheques de terceros</a></li>
         
       </ol>
     </section>
@@ -20,7 +20,7 @@
 <div class="row">
 <div class="col-lg-2">
 <div class="box">
-  <a href="<?=base_url()?>Welcome/nuevo_cheque_propio" type="button" class="btn btn-block btn-primary">
+  <a href="<?=base_url()?>Welcome/nuevo_cheque_terceros" type="button" class="btn btn-block btn-primary">
     <i class="fa fa-plus"></i> Nuevo Cheque
   </a>
 </div>
@@ -35,7 +35,7 @@
         <table class="table">
         <thead>
           <tr>
-            <th>A PAGAR</th>
+            <th>A COBRAR</th>
             <th data-ng-class="{'capitalize': tableHeaderType === 'dates'}" class="ng-binding">Hoy</th>
             <th data-ng-class="{'capitalize': tableHeaderType === 'dates'}" class="ng-binding">1 - 7 dias</th>
             <th data-ng-class="{'capitalize': tableHeaderType === 'dates'}" class="ng-binding">8 - 15 dias</th>
@@ -92,7 +92,7 @@
                   <th>Estado</th>
                   <th>Fecha de cheque</th>
                   <th>Fecha de pago</th>                  
-                  <th>Chequera</th>
+                  
                   <th>Titular</th>
                   <th>Nro de cheque</th>
                   <th>Monto</th>
@@ -128,13 +128,13 @@
                 </div>
                 </td>
                   <td><?php echo $cheques[$i]['fecha_cheque'];?></td>
-                  <td><?php echo $cheques[$i]['fecha_pago'];?></td>
-                  <td><?php echo $cheques[$i]['chequera'];?></td>
+                  <td><?php echo $cheques[$i]['fecha_deposito'];?></td>
+                  
                   <td><?php echo $cheques[$i]['titular'];?></td>
                   <td><?php echo $cheques[$i]['nro_cheque'];?></td>
                   <td>$ <?php echo $cheques[$i]['monto'];?></td>
                   <td><?php echo $cheques[$i]['banco_emision'];?></td>
-                  <td><?php echo $cheques[$i]['proveedor'];?></td>
+                  <td><?php echo $cheques[$i]['cliente'];?></td>
                   
                 </tr>
 

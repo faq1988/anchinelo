@@ -22,7 +22,7 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>$ <?php echo ''.$cheques_a_cubrir;?></h3>
+              <h3>$ <?php echo isset($cheques_a_cubrir->monto) ? ''.$cheques_a_cubrir->monto : '0';?></h3>
 
               <p>Cheques a cubrir</p>
             </div>
@@ -37,7 +37,7 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>$ <?php echo ''.$cheques_a_cobrar;?></h3>
+              <h3>$ <?php echo isset($cheques_a_cobrar->monto) ? ''.$cheques_a_cobrar->monto : '0';?></h3>
 
               <p>Cheques a cobrar</p>
             </div>

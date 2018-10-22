@@ -29,9 +29,12 @@ public function __construct()
       {              
         $data=array();         
         $lista_chequeras=  $this->cheque_model->obtener_chequeras_selectbox();
+        $lista_proveedores=  $this->cheque_model->obtener_proveedores();
 
         if (isset($lista_chequeras))
           $data['chequeras']= $lista_chequeras->result_array();
+         if (isset($lista_proveedores))
+          $data['proveedores']= $lista_proveedores->result_array();
         
           $this -> load -> view('header');
           $this -> load -> view('menu');
@@ -51,7 +54,7 @@ public function __construct()
       'proveedor' => $this->input->post('proveedor'),
       'nro_factura' => $this->input->post('nro_factura'),
       'nota' => $this->input->post('nota'),
-      'estado' => "A PAGAR",
+      'estado' => "CUBRIR",
       );
 
         $this->cheque_model->crear_cheque($data);
@@ -61,7 +64,61 @@ public function __construct()
   }
 
 
+   public function crear_cheque_terceros()
+  {    
+      $this->form_validation->set_rules('fecha_ingreso', 'Fecha de ingreso', 'required');
+      $this->form_validation->set_rules('fecha_cheque', 'Fecha de cheque', 'required');
+      $this->form_validation->set_rules('fecha_deposito', 'Fecha de depósito', 'required');
+      $this->form_validation->set_rules('titular', 'Titular', 'required');
+      $this->form_validation->set_rules('nro_cheque', 'Número de cheque', 'required');
+      $this->form_validation->set_rules('monto', 'Monto', 'required|numeric|greater_than[0]');
+      $this->form_validation->set_rules('banco_emision', 'Banco', 'required');
+      $this->form_validation->set_rules('cliente', 'Cliente', 'required');
+      $this->form_validation->set_rules('nro_factura', 'Número de factura', 'required');
+      $this->form_validation->set_rules('depositar_en', 'Depositar en', 'required');
 
+      
+      if ($this->form_validation->run() == FALSE)      
+      {              
+
+        $data=array();    
+        $lista_clientes=  $this->cheque_model->obtener_clientes();
+        $lista_bancos=  $this->cheque_model->obtener_bancos();
+        $lista_cuentas= $this->cheque_model->obtener_cuentas();
+
+         if (isset($lista_clientes))
+            $data['clientes']= $lista_clientes->result_array();
+         if (isset($lista_bancos))
+            $data['bancos']= $lista_bancos->result_array();
+         if (isset($lista_cuentas))
+            $data['cuentas']= $lista_cuentas->result_array();
+               
+          $this -> load -> view('header');
+          $this -> load -> view('menu');
+          $this -> load -> view('nuevo_cheque_terceros', $data);
+      } 
+      else
+      {
+        $data = array(
+      'fecha_ingreso' => $this->input->post('fecha_ingreso'),
+      'fecha_cheque' => $this->input->post('fecha_cheque'),
+      'fecha_deposito' => $this->input->post('fecha_deposito'),      
+      'titular' => $this->input->post('titular'),
+      'nro_cheque' => $this->input->post('nro_cheque'),      
+      'monto' => $this->input->post('monto'),
+      'banco_emision' => $this->input->post('banco_emision'),
+      'cliente' => $this->input->post('cliente'),      
+      'depositar_en' => $this->input->post('depositar_en'),
+      'nro_factura' => $this->input->post('nro_factura'),      
+      'nota' => $this->input->post('nota'),
+      'estado' => "COBRAR",
+      );
+
+        $this->cheque_model->crear_cheque_terceros($data);
+        redirect("welcome/cheques_terceros");
+      }
+
+  }
 
   public function eliminar_cheque()
   {
@@ -85,13 +142,21 @@ public function __construct()
   {
 
       $this->form_validation->set_rules('descripcion', 'Descripción', 'required');
+      $this->form_validation->set_rules('cuenta', 'Cuenta', 'required');
+      $this->form_validation->set_rules('nro_inicial', 'Número inicial', 'required|numeric');
+      $this->form_validation->set_rules('cant_cheques', 'Cantidad de cheques', 'required|numeric');
       
       
       if ($this->form_validation->run() == FALSE)      
       {                   
+        
+        $lista_cuentas=  $this->cheque_model->obtener_cuentas();
+        if (isset($lista_cuentas))
+        $data['cuentas']= $lista_cuentas->result_array();
+
           $this -> load -> view('header');
           $this -> load -> view('menu');
-          $this -> load -> view('nueva_chequera');
+          $this -> load -> view('nueva_chequera', $data);
       } 
       else
       {
@@ -125,6 +190,8 @@ public function __construct()
   {
 
       $this->form_validation->set_rules('nombre_apellido', 'Razón social', 'required');
+      $this->form_validation->set_rules('domicilio', 'Domicilio', 'required');
+      $this->form_validation->set_rules('telefono', 'Teléfono', 'required');
       
       
       if ($this->form_validation->run() == FALSE)      
@@ -162,6 +229,9 @@ public function __construct()
   {
 
       $this->form_validation->set_rules('nombre_apellido', 'Razón social', 'required');
+      $this->form_validation->set_rules('domicilio', 'Domicilio', 'required');
+      $this->form_validation->set_rules('telefono', 'Teléfono', 'required');
+
       
       
       if ($this->form_validation->run() == FALSE)      
@@ -202,13 +272,23 @@ public function __construct()
   {
 
       $this->form_validation->set_rules('nombre', 'Nombre', 'required');
+      $this->form_validation->set_rules('tipo_cuenta', 'Tipo de cuenta', 'required');
+      $this->form_validation->set_rules('banco', 'Banco', 'required');
+      $this->form_validation->set_rules('titular', 'Titular', 'required');
       
       
       if ($this->form_validation->run() == FALSE)      
       {                   
+
+        $data=array();    
+        $lista_bancos=  $this->cheque_model->obtener_bancos();
+
+        if (isset($lista_bancos))
+          $data['bancos']= $lista_bancos->result_array();
+
           $this -> load -> view('header');
           $this -> load -> view('menu');
-          $this -> load -> view('nueva_cuenta');
+          $this -> load -> view('nueva_cuenta', $data);
       } 
       else
       {

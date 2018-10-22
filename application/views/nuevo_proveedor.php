@@ -5,12 +5,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Nueva chequera
+        Nuevo proveedor
         
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Nueva chequera</li>
+        <li class="active">Nuevo proveedor</li>
       </ol>
     </section>
 
@@ -24,54 +24,37 @@
 
         <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Nueva chequera</h3>
+              <h3 class="box-title">Nuevo proveedor</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
             <!--form role="form"-->
-            <?php echo form_open('Cheque/crear_chequera'); ?>
+            <?php echo form_open('Cheque/crear_proveedor'); ?>
               <div class="box-body">
 
 
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Descripción</label>
-                  <input class="form-control" id="exampleInputEmail1" name="descripcion" placeholder="Descripción" type="text"
-                  value="<?php echo set_value('descripcion'); ?>">
-                  <?php echo form_error('descripcion', '<span style="color:red">', '</span>'); ?>
+                  <label for="exampleInputEmail1">Razón social</label>
+                  <input class="form-control" id="nombre_apellido" name="nombre_apellido" placeholder="Razón social" type="text"
+                  value="<?php echo set_value('nombre_apellido'); ?>">
+                  <?php echo form_error('nombre_apellido', '<span style="color:red">', '</span>'); ?>
                 </div>
             
-                <div class="form-group">
-                  <label for="cuenta">Cuenta</label>
-              
-                  <select name="cuenta" class="form-control">                      
-                    <option value="<?php echo set_value('cuenta'); ?>">Seleccionar cuenta</option>
-                            <?php
-                              if (isset($cuentas)){
-                               for($i=0; $i<sizeof($cuentas); $i++){ ?>
-
-                              <option value="<?php echo $cuentas[$i]['id'];?>">
-                                <?php echo $cuentas[$i]['nombre'];?>                                  
-                              </option>
-                              
-                              <?php } }?>                                                                                      
-                  </select>  
-                  <?php echo form_error('cuenta', '<span style="color:red">', '</span>'); ?>
-                </div>
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Número inicial</label>
-                  <input class="form-control" id="exampleInputEmail1" name="nro_inicial" placeholder="Número inicial" type="text"
-                  value="<?php echo set_value('nro_inicial'); ?>">
-                  <?php echo form_error('nro_inicial', '<span style="color:red">', '</span>'); ?>
+                  <label for="exampleInputEmail1">Domicilio</label>
+                  <input class="form-control" id="domicilio" name="domicilio" placeholder="Domicilio" type="text"
+                  value="<?php echo set_value('domicilio'); ?>">
+                  <?php echo form_error('domicilio', '<span style="color:red">', '</span>'); ?>
                 </div>
 
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Cantidad de cheques</label>
-                  <input class="form-control" id="exampleInputEmail1" name="cant_cheques" placeholder="Cantidad de cheques" type="text"
-                  value="<?php echo set_value('cant_cheques'); ?>">
-                  <?php echo form_error('cant_cheques', '<span style="color:red">', '</span>'); ?>
+                  <label for="exampleInputEmail1">Teléfono</label>
+                  <input class="form-control" id="telefono" name="telefono" placeholder="Teléfono" type="text"
+                  value="<?php echo set_value('telefono'); ?>">
+                  <?php echo form_error('telefono', '<span style="color:red">', '</span>'); ?>
                 </div>
 
               </div>
@@ -79,7 +62,7 @@
 
               <div class="box-footer">
                 <center>
-                <a class="btn btn-success" href="<?=base_url()?>welcome/chequeras">Cancelar</a>
+                <a class="btn btn-success" href="<?=base_url()?>welcome/proveedores">Cancelar</a>
                 <button type="submit" class="btn btn-primary">Guardar</button>
                 </center>
               </div>
@@ -101,7 +84,7 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <?php
+ <?php
        include "footer.php";
    ?>
 

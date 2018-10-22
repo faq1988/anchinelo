@@ -112,9 +112,71 @@ class Welcome extends CI_Controller {
     $data['monto_31a60']= $monto_31a60;
     $data['monto_mas60']= $monto_mas60;
 
+    $total_monto= $monto_hoy->monto + $monto_1a7->monto + $monto_8a15->monto + $monto_16a30->monto + $monto_31a60->monto + $monto_mas60->monto;
+    $total_cant= $monto_hoy->cant + $monto_1a7->cant + $monto_8a15->cant + $monto_16a30->cant + $monto_31a60->cant + $monto_mas60->cant;
+
+    $data['total_monto']= $total_monto;
+    $data['total_cant']= $total_cant;
+
     $this->load->view('header');
 	$this->load->view('menu');
 	$this->load->view('cheques_propios', $data);
+	
+  }
+
+
+
+
+
+
+ public function cheques_terceros()
+  {
+  	if (!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }
+	$data=array();
+    $this->load->model('cheque_model');
+    $lista_cheques=  $this->cheque_model->obtener_cheques_terceros();
+
+	date_default_timezone_set('America/Argentina/Buenos_Aires');
+    $begin_date = date( 'Y-m-d', strtotime( 'today' ) );
+    $end_date = $begin_date;    
+    $monto_hoy = $this->cheque_model->obtener_monto_a_cobrar($begin_date, $end_date);
+    $begin_date = date( 'Y-m-d', strtotime( '+1 day' ) );
+    $end_date = date( 'Y-m-d', strtotime( '+8 day' ) );
+    $monto_1a7 = $this->cheque_model->obtener_monto_a_cobrar($begin_date, $end_date);
+    $begin_date = date( 'Y-m-d', strtotime( '+9 day' ) );
+    $end_date = date( 'Y-m-d', strtotime( '+22 day' ) );
+    $monto_8a15 = $this->cheque_model->obtener_monto_a_cobrar($begin_date, $end_date);
+    $begin_date = date( 'Y-m-d', strtotime( '+23 day' ) );
+    $end_date = date( 'Y-m-d', strtotime( '+45 day' ) );
+    $monto_16a30 = $this->cheque_model->obtener_monto_a_cobrar($begin_date, $end_date);
+    $begin_date = date( 'Y-m-d', strtotime( '+46 day' ) );
+    $end_date = date( 'Y-m-d', strtotime( '+90 day' ) );
+    $monto_31a60 = $this->cheque_model->obtener_monto_a_cobrar($begin_date, $end_date);
+    $begin_date = date( 'Y-m-d', strtotime( '+91 day' ) );
+    $end_date = date( 'Y-m-d', strtotime( '+360 day' ) );
+    $monto_mas60 = $this->cheque_model->obtener_monto_a_cobrar($begin_date, $end_date);
+
+    if (isset($lista_cheques))
+    	$data['cheques']= $lista_cheques->result_array();
+    $data['monto_hoy']= $monto_hoy;
+    $data['monto_1a7']= $monto_1a7;
+    $data['monto_8a15']= $monto_8a15;
+    $data['monto_16a30']= $monto_16a30;
+    $data['monto_31a60']= $monto_31a60;
+    $data['monto_mas60']= $monto_mas60;
+
+    $total_monto= $monto_hoy->monto + $monto_1a7->monto + $monto_8a15->monto + $monto_16a30->monto + $monto_31a60->monto + $monto_mas60->monto;
+    $total_cant= $monto_hoy->cant + $monto_1a7->cant + $monto_8a15->cant + $monto_16a30->cant + $monto_31a60->cant + $monto_mas60->cant;
+
+    $data['total_monto']= $total_monto;
+    $data['total_cant']= $total_cant;
+
+    $this->load->view('header');
+	$this->load->view('menu');
+	$this->load->view('cheques_terceros', $data);
 	
   }
 
@@ -140,6 +202,34 @@ class Welcome extends CI_Controller {
      $this -> load -> view('header');
      $this -> load -> view('menu');
 	 $this -> load -> view('nuevo_cheque_propio', $data);
+  }
+
+
+
+
+   public function nuevo_cheque_terceros()
+  {
+  	if (!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }
+
+    $data=array();
+    $this->load->model('cheque_model');
+    $lista_clientes=  $this->cheque_model->obtener_clientes();
+    $lista_bancos=  $this->cheque_model->obtener_bancos();
+    $lista_cuentas= $this->cheque_model->obtener_cuentas();
+
+    if (isset($lista_clientes))
+    	$data['clientes']= $lista_clientes->result_array();
+    if (isset($lista_bancos))
+    	$data['bancos']= $lista_bancos->result_array();
+    if (isset($lista_cuentas))
+    	$data['cuentas']= $lista_cuentas->result_array();
+
+     $this -> load -> view('header');
+     $this -> load -> view('menu');
+	 $this -> load -> view('nuevo_cheque_terceros', $data);
   }
 
 
