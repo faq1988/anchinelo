@@ -1,5 +1,18 @@
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+
+    <?php if ($this->session->flashdata('error')) {?>
+              <div class="alert alert-danger">                                
+                <?php echo $this->session->flashdata('error');?>
+              </div>
+          <?php } ?>    
+          <?php if ($this->session->flashdata('success')) {?>
+              <div class="alert alert-success">                               
+                <?php echo $this->session->flashdata('success');?>
+              </div>
+          <?php } ?>    
+
+
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -74,11 +87,7 @@
                     <span class="sr-only">Opciones</span>
                   </button>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Editar</a></li>
-                    <li><a href="#">Depositar</a></li>
-                    <li><a href="#">Pagar</a></li>
-                    <li><a href="#">Rechazar</a></li>
-                    <li class="divider"></li>
+                  <li><a href="<?php echo base_url() ?>Cheque/editar_proveedor/<?php echo $proveedores[$i]['id']; ?>">Editar</a></li>
                     <li><a href="<?php echo base_url() ?>Cheque/eliminar_proveedor/<?php echo $proveedores[$i]['id']; ?>">Eliminar</a></li>
                   </ul>
                 </div>

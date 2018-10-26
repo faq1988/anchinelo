@@ -398,4 +398,100 @@ class Welcome extends CI_Controller {
 
 
 
+
+
+
+  public function editar_cuenta()
+  {
+  	if (!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }
+    $data=array();
+	$this->load->model('cheque_model');
+ 	$id_cuenta = $this->uri->segment(3);           
+    $cuenta = $this->cheque_model->obtener_cuenta($id_cuenta);
+    $lista_bancos=  $this->cheque_model->obtener_bancos();
+
+    if (isset($cuenta))
+    	$data['cuenta']= $cuenta->result_array();
+
+    if (isset($lista_bancos))
+    	$data['bancos']= $lista_bancos->result_array();
+
+     $this -> load -> view('header');
+     $this -> load -> view('menu');
+	 $this -> load -> view('editar_cuenta', $data);
+  }
+
+
+
+  public function editar_proveedor()
+  {
+  	if (!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }
+    $data=array();
+	$this->load->model('cheque_model');
+ 	$id_prov = $this->uri->segment(3);           
+    $proveedor = $this->cheque_model->obtener_proveedor($id_prov);
+
+    if (isset($proveedor))
+    	$data['proveedor']= $proveedor->result_array();
+    
+     $this -> load -> view('header');
+     $this -> load -> view('menu');
+	 $this -> load -> view('editar_proveedor', $data);
+  }
+
+
+
+  public function editar_cliente()
+  {
+  	if (!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }
+    $data=array();
+	$this->load->model('cheque_model');
+ 	$id_cliente = $this->uri->segment(3);           
+    $cliente = $this->cheque_model->obtener_cliente($id_cliente);
+
+    if (isset($cliente))
+    	$data['cliente']= $cliente->result_array();
+    
+     $this -> load -> view('header');
+     $this -> load -> view('menu');
+	 $this -> load -> view('editar_cliente', $data);
+  }
+
+
+
+  public function editar_chequera()
+  {
+  	if (!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }
+    $data=array();
+	$this->load->model('cheque_model');
+ 	$id_cheq = $this->uri->segment(3);           
+    $chequera = $this->cheque_model->obtener_chequera($id_cheq);
+    $lista_cuentas=  $this->cheque_model->obtener_cuentas();
+
+    if (isset($lista_cuentas))
+    	$data['cuentas']= $lista_cuentas->result_array();
+
+    if (isset($chequera))
+    	$data['chequera']= $chequera->result_array();
+    
+     $this -> load -> view('header');
+     $this -> load -> view('menu');
+	 $this -> load -> view('editar_chequera', $data);
+  }
+
+
+
+
 }

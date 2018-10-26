@@ -5,12 +5,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Perfil
+        Editar cuenta
         
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Transporte JyG</a></li>
-        <li class="active">Perfil</li>
+        <li class="active">Editar cuenta</li>
       </ol>
     </section>
 
@@ -24,12 +24,12 @@
 
         <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Perfil</h3>
+              <h3 class="box-title">Editar cuenta</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
             <!--form role="form"-->
-            <?php echo form_open('Cheque/editar_perfil'); ?>
+            <?php echo form_open('Cheque/editar_cuenta/' . $cuenta[0]['id']); ?>
               <div class="box-body">
 
 
@@ -37,34 +37,60 @@
                 <div class="form-group">
                   <label for="exampleInputEmail1">Nombre</label>
                   <input class="form-control" id="exampleInputEmail1" name="nombre" placeholder="Nombre" type="text"
-                  value="<?php echo $usuario[0]['nombre']; ?>">
+                  value="<?php echo $cuenta[0]['nombre']; ?>">
                   <?php echo form_error('nombre', '<span style="color:red">', '</span>'); ?>
                 </div>
+            
+
+                 <div class="form-group">
+                  <label for="tipo_cuenta">Tipo de cuenta</label>
+              
+                  <select name="tipo_cuenta" class="form-control">                      
+                    <option value="">Seleccionar tipo</option>
+                    <option value="BANCO" <?php echo $cuenta[0]['tipo_cuenta']=='BANCO' ? "selected" : "" ?>>BANCO</option>
+                    <option value="EFECTIVO" <?php echo $cuenta[0]['tipo_cuenta']=='CAJA' ? "selected" : ""?>>CAJA</option>
+                            
+                  </select>  
+                   <?php echo form_error('tipo_cuenta', '<span style="color:red">', '</span>'); ?>
+                </div>
+
+
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Apellido</label>
-                  <input class="form-control" id="exampleInputEmail1" name="apellido" placeholder="Apellido" type="text"
-                  value="<?php echo $usuario[0]['apellido']; ?>">
-                  <?php echo form_error('apellido', '<span style="color:red">', '</span>'); ?>
-                </div>    
+                  <label for="banco">Banco</label>
+              
+                  <select name="banco" class="form-control">                      
+                    <option value="<?php echo set_value('banco'); ?>">Seleccionar banco</option>
+                            <?php
+                              if (isset($bancos)){
+                               for($i=0; $i<sizeof($bancos); $i++){ ?>
+
+                              <option value="<?php echo $cuenta[0]['banco'];?>" 
+                                <?php if($bancos[$i]['id']==$cuenta[0]['banco']) echo 'selected="selected"'; ?>>
+                                <?php echo $bancos[$i]['nombre'];?>                                  
+                              </option>
+                              
+                              <?php } }?>                                                                                      
+                  </select>  
+                   <?php echo form_error('banco', '<span style="color:red">', '</span>'); ?>
+                </div>
 
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Email</label>
-                  <input class="form-control" id="exampleInputEmail1" name="email" placeholder="Apellido" type="email"
-                  value="<?php echo $usuario[0]['email']; ?>">
-                  <?php echo form_error('email', '<span style="color:red">', '</span>'); ?>
-                </div>           
-
+                  <label for="exampleInputEmail1">Titular</label>
+                  <input class="form-control" id="exampleInputEmail1" name="titular" placeholder="Titular" type="text"
+                  value="<?php echo $cuenta[0]['titular']; ?>">
+                   <?php echo form_error('titular', '<span style="color:red">', '</span>'); ?>
+                </div>
 
               </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
                 <center>
-                <a class="btn btn-success" href="<?=base_url()?>">Cancelar</a>
-                <button type="submit" class="btn btn-primary">Guardar</button>
-              </center>
+                <a class="btn btn-success" href="<?=base_url()?>welcome/cuentas">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Guardar</button>                
+                </center>
               </div>
             </form>
           </div>
@@ -84,7 +110,7 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
- <?php
+  <?php
        include "footer.php";
    ?>
 

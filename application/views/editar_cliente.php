@@ -5,12 +5,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Perfil
+        Editar cliente
         
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Transporte JyG</a></li>
-        <li class="active">Perfil</li>
+        <li class="active">Editar cliente</li>
       </ol>
     </section>
 
@@ -24,47 +24,47 @@
 
         <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Perfil</h3>
+              <h3 class="box-title">Editar cliente</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
             <!--form role="form"-->
-            <?php echo form_open('Cheque/editar_perfil'); ?>
+            <?php echo form_open('Cheque/editar_cliente/' . $cliente[0]['id']); ?>
               <div class="box-body">
 
 
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Nombre</label>
-                  <input class="form-control" id="exampleInputEmail1" name="nombre" placeholder="Nombre" type="text"
-                  value="<?php echo $usuario[0]['nombre']; ?>">
-                  <?php echo form_error('nombre', '<span style="color:red">', '</span>'); ?>
+                  <label for="nombre_apellido">Razón social</label>
+                  <input class="form-control" id="nombre_apellido" name="nombre_apellido" placeholder="Razón social" type="text"
+                  value="<?php echo $cliente[0]['nombre_apellido']; ?>">
+                  <?php echo form_error('nombre_apellido', '<span style="color:red">', '</span>'); ?>
+                </div>
+            
+
+                <div class="form-group">
+                  <label for="domicilio">Domicilio</label>
+                  <input class="form-control" id="domicilio" name="domicilio" placeholder="Domicilio" type="text"
+                  value="<?php echo $cliente[0]['domicilio']; ?>">
+                   <?php echo form_error('domicilio', '<span style="color:red">', '</span>'); ?>
                 </div>
 
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Apellido</label>
-                  <input class="form-control" id="exampleInputEmail1" name="apellido" placeholder="Apellido" type="text"
-                  value="<?php echo $usuario[0]['apellido']; ?>">
-                  <?php echo form_error('apellido', '<span style="color:red">', '</span>'); ?>
-                </div>    
-
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Email</label>
-                  <input class="form-control" id="exampleInputEmail1" name="email" placeholder="Apellido" type="email"
-                  value="<?php echo $usuario[0]['email']; ?>">
-                  <?php echo form_error('email', '<span style="color:red">', '</span>'); ?>
-                </div>           
-
+                  <label for="telefono">Teléfono</label>
+                  <input class="form-control" id="telefono" name="telefono" placeholder="Teléfono" type="text"
+                  value="<?php echo $cliente[0]['telefono']; ?>">
+                   <?php echo form_error('telefono', '<span style="color:red">', '</span>'); ?>
+                </div>
 
               </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
                 <center>
-                <a class="btn btn-success" href="<?=base_url()?>">Cancelar</a>
+                <a class="btn btn-success" href="<?=base_url()?>welcome/clientes">Cancelar</a>
                 <button type="submit" class="btn btn-primary">Guardar</button>
-              </center>
+                </center>
               </div>
             </form>
           </div>

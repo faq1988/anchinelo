@@ -263,7 +263,18 @@ public function __construct()
   {
 
     $id_cuenta = $this->uri->segment(3);           
-    $this->cheque_model->eliminar_cuenta($id_cuenta);
+    $error_code = $this->cheque_model->eliminar_cuenta($id_cuenta);
+
+    //problema de foreign key
+    if ($error_code == 1451)
+    {
+      $this->session->set_flashdata('error', 'No es posible eliminar la cuenta, la misma está siendo utilizada');
+    }
+    else
+    {
+      $this->session->set_flashdata('success', 'La cuenta fue eliminada con éxito'); 
+    }
+
     redirect('Welcome/cuentas');
   }
 
@@ -301,13 +312,198 @@ public function __construct()
       
       );
 
-        $this->cheque_model->crear_cuenta($data);
+        $this->cheque_model->crear_cuenta($data);     
         redirect("welcome/cuentas");
       }
 
   }
 
 
+
+
+
+
+ public function editar_cuenta()
+  {
+
+    $id_cuenta = $this->uri->segment(3);  
+
+
+      $this->form_validation->set_rules('nombre', 'Nombre', 'required');
+      $this->form_validation->set_rules('tipo_cuenta', 'Tipo de cuenta', 'required');
+      $this->form_validation->set_rules('banco', 'Banco', 'required');
+      $this->form_validation->set_rules('titular', 'Titular', 'required');
+      
+      
+      if ($this->form_validation->run() == FALSE)      
+      {                   
+
+        $data=array();    
+        $lista_bancos=  $this->cheque_model->obtener_bancos();
+        $cuenta = $this->cheque_model->obtener_cuenta($id_cuenta);
+    
+        if (isset($cuenta))
+          $data['cuenta']= $cuenta->result_array();
+
+        if (isset($lista_bancos))
+          $data['bancos']= $lista_bancos->result_array();
+
+          $this -> load -> view('header');
+          $this -> load -> view('menu');
+          $this -> load -> view('editar_cuenta', $data);
+      } 
+      else
+      {
+        $data = array(      
+      'nombre' => $this->input->post('nombre'),
+      'tipo_cuenta' => $this->input->post('tipo_cuenta'),
+      'banco' => $this->input->post('banco'),
+      'titular' => $this->input->post('titular'),
+      
+      
+      );
+
+        $this->cheque_model->editar_cuenta($id_cuenta, $data);
+
+        $this->session->set_flashdata('success', 'La cuenta '. $id_cuenta .' fue modificada con éxito');
+
+        redirect("welcome/cuentas");
+      }
+
+  }
+
+
+
+
+ public function editar_proveedor()
+  {
+
+    $id_prov = $this->uri->segment(3);  
+
+      $this->form_validation->set_rules('nombre_apellido', 'Razón social', 'required');
+      $this->form_validation->set_rules('domicilio', 'Domicilio', 'required');
+      $this->form_validation->set_rules('telefono', 'Teléfono', 'required');
+      
+      
+      if ($this->form_validation->run() == FALSE)      
+      {                   
+        $data=array();           
+        $proveedor = $this->cheque_model->obtener_proveedor($id_prov);
+    
+        if (isset($proveedor))
+          $data['proveedor']= $proveedor->result_array();
+
+          $this -> load -> view('header');
+          $this -> load -> view('menu');
+          $this -> load -> view('editar_proveedor', $data);
+      } 
+      else
+      {
+        $data = array(
+      
+      'nombre_apellido' => $this->input->post('nombre_apellido'),
+      'domicilio' => $this->input->post('domicilio'),
+      'telefono' => $this->input->post('telefono'),
+      
+      
+      );
+
+        $this->cheque_model->editar_proveedor($id_prov, $data);
+        $this->session->set_flashdata('success', 'El proveedor '. $id_prov .' fue modificado con éxito');
+        redirect("welcome/proveedores");
+      }
+
+  }
+
+
+
+
+ public function editar_cliente()
+  {
+
+    $id_cliente = $this->uri->segment(3);  
+
+      $this->form_validation->set_rules('nombre_apellido', 'Razón social', 'required');
+      $this->form_validation->set_rules('domicilio', 'Domicilio', 'required');
+      $this->form_validation->set_rules('telefono', 'Teléfono', 'required');
+      
+      
+      if ($this->form_validation->run() == FALSE)      
+      {                   
+        $data=array();           
+        $cliente = $this->cheque_model->obtener_cliente($id_cliente);
+    
+        if (isset($cliente))
+          $data['cliente']= $cliente->result_array();
+
+          $this -> load -> view('header');
+          $this -> load -> view('menu');
+          $this -> load -> view('editar_cliente', $data);
+      } 
+      else
+      {
+        $data = array(
+      
+      'nombre_apellido' => $this->input->post('nombre_apellido'),
+      'domicilio' => $this->input->post('domicilio'),
+      'telefono' => $this->input->post('telefono'),
+      
+      
+      );
+
+        $this->cheque_model->editar_cliente($id_cliente, $data);
+        $this->session->set_flashdata('success', 'El cliente '. $id_cliente .' fue modificado con éxito');
+        redirect("welcome/clientes");
+      }
+
+  }
+
+
+
+
+  public function editar_chequera()
+  {
+
+    $id_chequera = $this->uri->segment(3);  
+
+       $this->form_validation->set_rules('descripcion', 'Descripción', 'required');
+      $this->form_validation->set_rules('cuenta', 'Cuenta', 'required');
+      $this->form_validation->set_rules('nro_inicial', 'Número inicial', 'required|numeric');
+      $this->form_validation->set_rules('cant_cheques', 'Cantidad de cheques', 'required|numeric');
+      
+      
+      if ($this->form_validation->run() == FALSE)      
+      {                   
+        
+        $lista_cuentas=  $this->cheque_model->obtener_cuentas();
+        $chequera = $this->cheque_model->obtener_chequera($id_chequera);
+        if (isset($lista_cuentas))
+        $data['cuentas']= $lista_cuentas->result_array();
+        
+        if (isset($chequera))
+          $data['chequera']= $chequera->result_array();
+
+          $this -> load -> view('header');
+          $this -> load -> view('menu');
+          $this -> load -> view('editar_chequera', $data);
+      } 
+      else
+      {
+        $data = array(
+      
+      'descripcion' => $this->input->post('descripcion'),
+      'cuenta' => $this->input->post('cuenta'),
+      'nro_inicial' => $this->input->post('nro_inicial'),
+      'cant_cheques' => $this->input->post('cant_cheques'),
+      
+      );
+
+        $this->cheque_model->editar_chequera($id_chequera,$data);
+        $this->session->set_flashdata('success', 'La chequera '. $id_chequera .' fue modificada con éxito');
+        redirect("welcome/chequeras");
+      }
+
+  }
 
 
 }

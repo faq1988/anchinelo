@@ -160,6 +160,10 @@ function eliminar_cuenta($id)
 	{
 		$this->db->where('id =', $id);
 		$this->db->delete('cuenta');
+
+		$errors = $this->db->error();
+		//error 1451: significa que no se pudo eliminar la entidad por problemas de foreign key
+		return $errors['code'];	
 	}
 
 
@@ -257,6 +261,84 @@ if ($q->num_rows() >0 ) return $q;//->result();
   			}
 
 
+
+public function obtener_cuenta($id){
+
+		$this->db->where('id', $id);
+		$q = $this->db->get('cuenta');
+		if ($q->num_rows() >0 ) return $q;//->result();
+		}
+
+
+public function editar_cuenta($id, $data)
+{
+	$this->db->set('nombre', $data['nombre']);
+	$this->db->set('tipo_cuenta', $data['tipo_cuenta']);
+	$this->db->set('banco', $data['banco']);
+	$this->db->set('titular', $data['titular']);
+	$this->db->where('id', $id);
+	$this->db->update('cuenta');	
+}
+
+
+public function obtener_proveedor($id){
+
+		$this->db->where('id', $id);
+		$q = $this->db->get('proveedor');
+		if ($q->num_rows() >0 ) return $q;//->result();
+		}
+
+
+
+public function editar_proveedor($id, $data)
+{
+	$this->db->set('nombre_apellido', $data['nombre_apellido']);
+	$this->db->set('domicilio', $data['domicilio']);
+	$this->db->set('telefono', $data['telefono']);	
+	$this->db->where('id', $id);
+	$this->db->update('proveedor');	
+}
+
+
+
+public function obtener_cliente($id){
+
+		$this->db->where('id', $id);
+		$q = $this->db->get('cliente');
+		if ($q->num_rows() >0 ) return $q;//->result();
+		}
+
+
+
+public function editar_cliente($id, $data)
+{
+	$this->db->set('nombre_apellido', $data['nombre_apellido']);
+	$this->db->set('domicilio', $data['domicilio']);
+	$this->db->set('telefono', $data['telefono']);	
+	$this->db->where('id', $id);
+	$this->db->update('cliente');	
+}
+
+
+
+public function obtener_chequera($id){
+
+		$this->db->where('id', $id);
+		$q = $this->db->get('chequera');
+		if ($q->num_rows() >0 ) return $q;//->result();
+		}
+
+
+
+public function editar_chequera($id, $data)
+{
+	$this->db->set('descripcion', $data['descripcion']);
+	$this->db->set('cuenta', $data['cuenta']);
+	$this->db->set('nro_inicial', $data['nro_inicial']);	
+	$this->db->set('cant_cheques', $data['cant_cheques']);	
+	$this->db->where('id', $id);
+	$this->db->update('chequera');	
+}
 
 /*
 function cambiar_password($username, $password)

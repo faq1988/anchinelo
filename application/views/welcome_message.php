@@ -9,7 +9,7 @@
         
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Transporte JyG</a></li>
         <li class="active">Panel de control</li>
       </ol>
     </section>

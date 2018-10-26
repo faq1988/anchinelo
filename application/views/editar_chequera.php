@@ -5,12 +5,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Perfil
+        Editar chequera
         
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Transporte JyG</a></li>
-        <li class="active">Perfil</li>
+        <li class="active">Editar chequera</li>
       </ol>
     </section>
 
@@ -24,47 +24,64 @@
 
         <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Perfil</h3>
+              <h3 class="box-title">Editar chequera</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
             <!--form role="form"-->
-            <?php echo form_open('Cheque/editar_perfil'); ?>
+            <?php echo form_open('Cheque/editar_chequera/' . $chequera[0]['id']); ?>
               <div class="box-body">
 
 
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Nombre</label>
-                  <input class="form-control" id="exampleInputEmail1" name="nombre" placeholder="Nombre" type="text"
-                  value="<?php echo $usuario[0]['nombre']; ?>">
-                  <?php echo form_error('nombre', '<span style="color:red">', '</span>'); ?>
+                  <label for="exampleInputEmail1">Descripción</label>
+                  <input class="form-control" id="exampleInputEmail1" name="descripcion" placeholder="Descripción" type="text"
+                  value="<?php echo $chequera[0]['descripcion']; ?>">
+                  <?php echo form_error('descripcion', '<span style="color:red">', '</span>'); ?>
+                </div>
+            
+                <div class="form-group">
+                  <label for="cuenta">Cuenta</label>
+              
+                  <select name="cuenta" class="form-control">                      
+                    <option value="<?php echo set_value('cuenta'); ?>">Seleccionar cuenta</option>
+                            <?php
+                              if (isset($cuentas)){
+                               for($i=0; $i<sizeof($cuentas); $i++){ ?>
+
+                              <option value="<?php echo $chequera[0]['cuenta'];?>"
+                                <?php if($cuentas[$i]['id']==$chequera[0]['cuenta']) echo 'selected="selected"'; ?>>
+                                <?php echo $cuentas[$i]['nombre'];?>                                  
+                              </option>                              
+                              <?php } }?>                                                                                      
+                  </select>  
+                  <?php echo form_error('cuenta', '<span style="color:red">', '</span>'); ?>
                 </div>
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Apellido</label>
-                  <input class="form-control" id="exampleInputEmail1" name="apellido" placeholder="Apellido" type="text"
-                  value="<?php echo $usuario[0]['apellido']; ?>">
-                  <?php echo form_error('apellido', '<span style="color:red">', '</span>'); ?>
-                </div>    
+                  <label for="exampleInputEmail1">Número inicial</label>
+                  <input class="form-control" id="exampleInputEmail1" name="nro_inicial" placeholder="Número inicial" type="text"
+                  value="<?php echo $chequera[0]['nro_inicial']; ?>">
+                  <?php echo form_error('nro_inicial', '<span style="color:red">', '</span>'); ?>
+                </div>
 
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Email</label>
-                  <input class="form-control" id="exampleInputEmail1" name="email" placeholder="Apellido" type="email"
-                  value="<?php echo $usuario[0]['email']; ?>">
-                  <?php echo form_error('email', '<span style="color:red">', '</span>'); ?>
-                </div>           
-
+                  <label for="exampleInputEmail1">Cantidad de cheques</label>
+                  <input class="form-control" id="exampleInputEmail1" name="cant_cheques" placeholder="Cantidad de cheques" type="text"
+                  value="<?php echo $chequera[0]['cant_cheques']; ?>">
+                  <?php echo form_error('cant_cheques', '<span style="color:red">', '</span>'); ?>
+                </div>
 
               </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
                 <center>
-                <a class="btn btn-success" href="<?=base_url()?>">Cancelar</a>
+                <a class="btn btn-success" href="<?=base_url()?>welcome/chequeras">Cancelar</a>
                 <button type="submit" class="btn btn-primary">Guardar</button>
-              </center>
+                </center>
               </div>
             </form>
           </div>
@@ -84,7 +101,7 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
- <?php
+  <?php
        include "footer.php";
    ?>
 

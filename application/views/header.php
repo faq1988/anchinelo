@@ -66,27 +66,15 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
               <!--img src="<?=base_url()?>assets_template/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"-->
-              <span class="hidden-xs">Gladys Anchinelo</span>
+              <span class="hidden-xs"><i class="fa fa-user"></i> Gladys Anchinelo</span>
             </a>
             <ul class="dropdown-menu">
-              <!-- User image -->
-              <li class="user-header">
-                <img src="<?=base_url()?>assets_template/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
-                <p>
-                  Gladys Anchinelo - Dueña
-                  <small>Usuario desde Nov. 2018</small>
-                </p>
-              </li>
+             
              
               <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="<?=base_url()?>Welcome/perfil" class="btn btn-default btn-flat">Perfil</a>
-                </div>
-                <div class="pull-right">
-                  <a href="<?=base_url()?>login/logout" class="btn btn-default btn-flat">Salir</a>
-                </div>
+              <li>
+                  <a href="<?=base_url()?>Welcome/perfil">Perfil</a>  
+                  <a href="<?=base_url()?>login/logout">Salir</a>
               </li>
             </ul>
           </li>
