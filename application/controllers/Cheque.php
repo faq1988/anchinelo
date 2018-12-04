@@ -10,7 +10,7 @@ public function __construct()
 }
 
 	
-//estados de un cheque: cartera, aplicado, rechazado, anulado
+//estados de un cheque: CUBRIR, ANULADO, VENCIDO, PAGADO.
 
   public function crear_cheque()
   {    
@@ -48,8 +48,8 @@ public function __construct()
       'fecha_pago' => $this->input->post('fecha_pago'),
       'chequera' => $this->input->post('chequera'),
       'nro_cheque' => $this->input->post('nro_cheque'),
-      'titular' => $this->input->post('titular'),
-      'banco_emision' => $this->input->post('banco_emision'),
+      //'titular' => $this->input->post('titular'),
+      //'banco_emision' => $this->input->post('banco_emision'),
       'monto' => $this->input->post('monto'),
       'proveedor' => $this->input->post('proveedor'),
       'nro_factura' => $this->input->post('nro_factura'),
@@ -57,13 +57,16 @@ public function __construct()
       'estado' => "CUBRIR",
       );
 
+
+
+
         $this->cheque_model->crear_cheque($data);
         redirect("welcome/cheques_propios");
       }
 
   }
 
-
+//estados de un cheque: COBRAR, ANULADO, VENCIDO, COBRADO.
    public function crear_cheque_terceros()
   {    
       $this->form_validation->set_rules('fecha_ingreso', 'Fecha de ingreso', 'required');
@@ -365,7 +368,7 @@ public function __construct()
 
         $this->cheque_model->editar_cuenta($id_cuenta, $data);
 
-        $this->session->set_flashdata('success', 'La cuenta '. $id_cuenta .' fue modificada con éxito');
+        $this->session->set_flashdata('success', 'La cuenta "'. $data['nombre'] .'" fue modificada con éxito');
 
         redirect("welcome/cuentas");
       }
@@ -409,7 +412,7 @@ public function __construct()
       );
 
         $this->cheque_model->editar_proveedor($id_prov, $data);
-        $this->session->set_flashdata('success', 'El proveedor '. $id_prov .' fue modificado con éxito');
+        $this->session->set_flashdata('success', 'El proveedor "'. $data['nombre_apellido'] .'" fue modificado con éxito');
         redirect("welcome/proveedores");
       }
 
@@ -452,7 +455,7 @@ public function __construct()
       );
 
         $this->cheque_model->editar_cliente($id_cliente, $data);
-        $this->session->set_flashdata('success', 'El cliente '. $id_cliente .' fue modificado con éxito');
+        $this->session->set_flashdata('success', 'El cliente "'. $data['nombre_apellido'] .'" fue modificado con éxito');
         redirect("welcome/clientes");
       }
 
@@ -499,11 +502,75 @@ public function __construct()
       );
 
         $this->cheque_model->editar_chequera($id_chequera,$data);
-        $this->session->set_flashdata('success', 'La chequera '. $id_chequera .' fue modificada con éxito');
+        $this->session->set_flashdata('success', 'La chequera "'. $data['descripcion'] .'" fue modificada con éxito');
         redirect("welcome/chequeras");
       }
 
   }
 
+
+
+
+
+ public function editar_cheque_propio()
+  {
+
+    $id_cheque_propio = $this->uri->segment(3);  
+
+       $this->form_validation->set_rules('fecha_salida', 'Fecha de salida', 'required');
+      $this->form_validation->set_rules('fecha_cheque', 'Fecha de cheque', 'required');
+      $this->form_validation->set_rules('fecha_pago', 'Fecha de pago', 'required');
+      $this->form_validation->set_rules('chequera', 'Chequera', 'required');
+      $this->form_validation->set_rules('nro_cheque', 'Número de cheque', 'required');
+      //$this->form_validation->set_rules('titular', 'Titular', 'required');
+      //$this->form_validation->set_rules('banco_emision', 'Banco', 'required');
+      $this->form_validation->set_rules('monto', 'Monto', 'required|numeric|greater_than[0]');
+      $this->form_validation->set_rules('proveedor', 'Proveedor', 'required');
+      $this->form_validation->set_rules('nro_factura', 'Número de factura', 'required');
+      
+      
+      if ($this->form_validation->run() == FALSE)      
+      {                   
+        
+        $data=array();         
+        $lista_chequeras=  $this->cheque_model->obtener_chequeras_selectbox();
+        $lista_proveedores=  $this->cheque_model->obtener_proveedores();
+        $cheque_propio = $this->cheque_model->obtener_cheque($id_cheque_propio);
+
+        if (isset($lista_chequeras))
+          $data['chequeras']= $lista_chequeras->result_array();
+         if (isset($lista_proveedores))
+          $data['proveedores']= $lista_proveedores->result_array();
+        if (isset($cheque_propio))
+          $data['cheque_propio']= $cheque_propio->result_array();
+        
+          $this -> load -> view('header');
+          $this -> load -> view('menu');
+          $this -> load -> view('editar_cheque_propio', $data);
+      } 
+      else
+      {
+       $data = array(
+      'fecha_salida' => $this->input->post('fecha_salida'),
+      'fecha_cheque' => $this->input->post('fecha_cheque'),
+      'fecha_pago' => $this->input->post('fecha_pago'),
+      'chequera' => $this->input->post('chequera'),
+      'nro_cheque' => $this->input->post('nro_cheque'),
+      //'titular' => $this->input->post('titular'),
+      //'banco_emision' => $this->input->post('banco_emision'),
+      'monto' => $this->input->post('monto'),
+      'proveedor' => $this->input->post('proveedor'),
+      'nro_factura' => $this->input->post('nro_factura'),
+      'nota' => $this->input->post('nota'),
+      //'estado' => $this->input->post('estado'),
+      );
+
+
+        $this->cheque_model->editar_cheque_propio($id_cheque_propio, $data);
+        $this->session->set_flashdata('success', 'El cheque "'. $id_cheque_propio .'" fue modificado con éxito');
+        redirect("welcome/cheques_propios");
+      }
+
+  }
 
 }

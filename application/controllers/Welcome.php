@@ -492,6 +492,34 @@ class Welcome extends CI_Controller {
   }
 
 
+   public function editar_cheque_propio()
+  {
+  	if (!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }
+    $data=array();
+	$this->load->model('cheque_model');
+ 	$id_cheque = $this->uri->segment(3);           
+    $cheque = $this->cheque_model->obtener_cheque($id_cheque);
+    $lista_proveedores=  $this->cheque_model->obtener_proveedores();
+    $lista_chequeras=  $this->cheque_model->obtener_chequeras_selectbox();
+
+    if (isset($lista_proveedores))
+    	$data['proveedores']= $lista_proveedores->result_array();
+    if (isset($lista_chequeras))
+    	$data['chequeras']= $lista_chequeras->result_array();
+	if (isset($cheque))
+    	$data['cheque']= $cheque->result_array();
+
+
+    
+     $this -> load -> view('header');
+     $this -> load -> view('menu');
+	 $this -> load -> view('editar_cheque_propio', $data);
+  }
+
+
 
 
 }

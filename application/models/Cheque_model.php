@@ -15,9 +15,19 @@ public function __construct()
 
 function crear_cheque($data){
 		
-		$this->db->insert('cheque_propio', array('fecha_salida'=>$data['fecha_salida'], 'fecha_cheque'=>$data['fecha_cheque'], 'fecha_pago'=>$data['fecha_pago'], 'chequera'=>$data['chequera'], 'nro_cheque'=>$data['nro_cheque'], 'titular'=>$data['titular'], 'estado'=>$data['estado']
-		, 'banco_emision'=>$data['banco_emision'], 'monto'=>$data['monto'], 'proveedor'=>$data['proveedor'], 'nro_factura'=>$data['nro_factura'], 
-		'nota'=>$data['nota']));
+		$this->db->insert('cheque_propio', 
+			array(	'fecha_salida'=>$data['fecha_salida'], 
+					'fecha_cheque'=>$data['fecha_cheque'], 
+					'fecha_pago'=>$data['fecha_pago'], 
+					'chequera'=>$data['chequera'], 
+					'nro_cheque'=>$data['nro_cheque'], 
+					//'titular'=>$data['titular'], 
+					'estado'=>$data['estado'], 
+					//'banco_emision'=>$data['banco_emision'], 
+					'monto'=>$data['monto'], 
+					'proveedor'=>$data['proveedor'], 
+					'nro_factura'=>$data['nro_factura'], 
+					'nota'=>$data['nota']));
 	}
 
 
@@ -31,10 +41,23 @@ function crear_cheque_terceros($data){
 
 
 public function obtener_cheque($id){
-
+/*
 $this->db->where('id', $id);
 $q = $this->db->get('cheque_propio');
 if ($q->num_rows() >0 ) return $q;//->result();
+*/
+
+$this->db->select('ch.id as id, ch.estado as estado, ch.fecha_cheque, ch.fecha_pago, ch.fecha_salida, ch.nro_factura, k.descripcion as chequera, k.id as id_chequera, g.titular, ch.nro_cheque, ch.monto, b.nombre as banco_emision, p.id as proveedor');
+$this->db->from('cheque_propio ch');
+$this->db->join('chequera k', 'k.id = ch.chequera');
+$this->db->join('cuenta g', 'g.id = k.cuenta');
+$this->db->join('banco b', 'b.id = g.banco');
+$this->db->join('proveedor p', 'p.id = ch.proveedor');
+$this->db->where('ch.id', $id);
+$q = $this->db->get('');
+//$q = $this->db->get('cheque_propio');
+if ($q->num_rows() >0 ) return $q;//->result();
+
 }
 
 
@@ -340,6 +363,26 @@ public function editar_chequera($id, $data)
 	$this->db->update('chequera');	
 }
 
+
+
+public function editar_cheque_propio($id, $data)
+{
+	$this->db->set('fecha_salida', $data['fecha_salida']);
+	$this->db->set('fecha_cheque', $data['fecha_cheque']);
+	$this->db->set('fecha_pago', $data['fecha_pago']);
+	//$this->db->set('estado', $data['estado']);
+	$this->db->set('chequera', $data['chequera']);	
+	$this->db->set('nro_cheque', $data['nro_cheque']);	
+	$this->db->set('monto', $data['monto']);	
+	$this->db->set('proveedor', $data['proveedor']);	
+	$this->db->set('nro_factura', $data['nro_factura']);	
+	$this->db->set('nota', $data['nota']);	
+	$this->db->where('id', $id);
+	$this->db->update('cheque_propio');	
+
+
+
+}
 /*
 function cambiar_password($username, $password)
 {

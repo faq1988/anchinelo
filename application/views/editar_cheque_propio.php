@@ -29,7 +29,7 @@
             <!-- /.box-header -->
             <!-- form start -->
             <!--form role="form"-->
-            <?php echo form_open('Cheque/crear_cheque'); ?>
+            <?php echo form_open('Cheque/editar_cheque_propio/' . $cheque[0]['id']); ?>
               <div class="box-body">
 
 
@@ -43,7 +43,7 @@
                           <i class="fa fa-calendar"></i>
                         </div>
                         <input class="form-control pull-right" id="datepicker" name="fecha_salida" type="date" 
-                        value="<?php echo set_value('fecha_salida'); ?>">                  
+                        value="<?php echo $cheque[0]['fecha_salida']; ?>">                  
                       </div>
                       <?php echo form_error('fecha_salida', '<span style="color:red">', '</span>'); ?>
                     </div>
@@ -57,7 +57,7 @@
                           <i class="fa fa-calendar"></i>
                         </div>
                         <input class="form-control pull-right" id="datepicker" name="fecha_cheque" type="date"
-                        value="<?php echo set_value('fecha_cheque'); ?>">
+                        value="<?php echo $cheque[0]['fecha_cheque']; ?>">
                       </div>
                       <?php echo form_error('fecha_cheque', '<span style="color:red">', '</span>'); ?>
                     </div>
@@ -71,7 +71,7 @@
                           <i class="fa fa-calendar"></i>
                         </div>
                         <input class="form-control pull-right" id="datepicker" name="fecha_pago" type="date"
-                        value="<?php echo set_value('fecha_pago'); ?>">
+                        value="<?php echo $cheque[0]['fecha_pago']; ?>">
                       </div>
                       <?php echo form_error('fecha_pago', '<span style="color:red">', '</span>'); ?>
                     </div>
@@ -82,7 +82,7 @@
           <div class="row">
                 <div class="col-md-12">
                 <div class="col-md-6">
-              <div class="form-group">
+              <!--div class="form-group">
                   <label for="chequera">Chequera</label>
               <select name="chequera" id="chequera" class="form-control">                      
                     <option value="<?php echo set_value('chequera'); ?>">Seleccionar chequera</option>
@@ -99,14 +99,39 @@
                               <?php } }?>                                                                                      
                   </select> 
                   <?php echo form_error('chequera', '<span style="color:red">', '</span>'); ?>
-                </div>
+                </div-->
+
+            <div class="form-group">
+                  <label for="chequera">Chequera</label>
+              
+                  <select name="chequera" id="chequera" class="form-control">                      
+                    <option value="<?php echo set_value('chequera'); ?>">Seleccionar chequera</option>
+                            <?php
+                              if (isset($chequeras)){
+                               for($i=0; $i<sizeof($chequeras); $i++){ ?>
+
+                              <option data-titular="<?php echo $chequeras[$i]['titular'];?>" 
+                                data-banco="<?php echo $chequeras[$i]['banco'];?>"                                 
+                                value="<?php echo $chequeras[$i]['id'];?>"
+                                <?php if($chequeras[$i]['id']==$cheque[0]['id_chequera']) echo 'selected="selected"'; ?>>
+                                <?php echo $chequeras[$i]['descripcion'];?>                                  
+                              </option>                              
+                              <?php } }?>                                                                                      
+                  </select>  
+                  <?php echo form_error('chequera', '<span style="color:red">', '</span>'); ?>
+                </div>  
+
+
+
+
               </div>
+
 
                 <div class="col-md-6">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Nro de cheque</label>
                   <input class="form-control" id="nro_cheque" name="nro_cheque" placeholder="Número de cheque" type="text"
-                  value="<?php echo set_value('nro_cheque'); ?>">
+                  value="<?php echo $cheque[0]['nro_cheque']; ?>">
                   <?php echo form_error('nro_cheque', '<span style="color:red">', '</span>'); ?>
                 </div>
               </div>
@@ -119,7 +144,7 @@
                 <div class="form-group">
                   <label for="exampleInputEmail1">Titular del cheque</label>
                   <input class="form-control" id="titular" name="titular" placeholder="Titular" type="text" disabled
-                  value="<?php echo set_value('titular'); ?>">
+                  value="<?php echo $cheque[0]['titular']; ?>">
                   <?php echo form_error('titular', '<span style="color:red">', '</span>'); ?>
                 </div>
               </div>
@@ -128,7 +153,7 @@
                 <div class="form-group">
                   <label for="exampleInputEmail1">Banco de emisión</label>
                   <input class="form-control" id="banco_emision" name="banco_emision" placeholder="Banco" type="text" disabled
-                  value="<?php echo set_value('banco_emision'); ?>">
+                  value="<?php echo $cheque[0]['banco_emision']; ?>">
                   <?php echo form_error('banco_emision', '<span style="color:red">', '</span>'); ?>
                 </div>
               </div>
@@ -141,7 +166,7 @@
                 <div class="form-group">
                   <label for="exampleInputEmail1">Monto</label>
                   <input class="form-control" id="monto" name="monto" placeholder="Monto" type="text"
-                  value="<?php echo set_value('monto'); ?>">
+                  value="<?php echo $cheque[0]['monto']; ?>">
                   <?php echo form_error('monto', '<span style="color:red">', '</span>'); ?>
                 </div>
               </div>
@@ -155,7 +180,8 @@
                               if (isset($proveedores)){
                                for($i=0; $i<sizeof($proveedores); $i++){ ?>
 
-                              <option value="<?php echo $proveedores[$i]['id'];?>">
+                              <option value="<?php echo $cheque[0]['proveedor'];?>"                                
+                                <?php if($proveedores[$i]['id']==$cheque[0]['proveedor']) echo 'selected="selected"'; ?>>
                                 <?php echo $proveedores[$i]['nombre_apellido'];?>                                  
                               </option>
                               
@@ -165,11 +191,14 @@
                 </div>
               </div>
 
+
+
+
                 <div class="col-md-4">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Nro de factura</label>
                   <input class="form-control" id="nro_factura" name="nro_factura" placeholder="Número de factura" type="text"
-                  value="<?php echo set_value('nro_factura'); ?>">
+                  value="<?php echo $cheque[0]['nro_factura']; ?>">
                   <?php echo form_error('nro_factura', '<span style="color:red">', '</span>'); ?>
                 </div>
               </div>
@@ -242,8 +271,6 @@ $(document).ready(function() {
     $('#chequera').change(function(){
         $('#titular').val( $(this).find('option:selected').data('titular') ); 
         $('#banco_emision').val( $(this).find('option:selected').data('banco') ); 
-        //document.getElementById("titular").value = $(this).find('option:selected').data('titular');
-
     });
 });
 </script>
@@ -278,9 +305,5 @@ $(document).ready(function() {
 <script src="<?=base_url()?>assets_template/dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?=base_url()?>assets_template/dist/js/demo.js"></script>
-
-
-
-
 </body>
 </html>

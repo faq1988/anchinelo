@@ -45,7 +45,7 @@
     <!-- Logo -->
     <a href="<?=base_url()?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>T</b>A</span>
+      <span class="logo-mini"><b>JyG</b></span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>Transporte</b> JYG</span>
     </a>

@@ -1,5 +1,22 @@
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+
+
+      <?php if ($this->session->flashdata('error')) {?>
+              <div class="alert alert-danger">                                
+                <?php echo $this->session->flashdata('error');?>
+              </div>
+          <?php } ?>    
+          <?php if ($this->session->flashdata('success')) {?>
+              <div class="alert alert-success">                               
+                <?php echo $this->session->flashdata('success');?>
+              </div>
+          <?php } ?>    
+
+
+
+
+
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -7,7 +24,7 @@
         
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Panel</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Transporte JyG</a></li>
         <li><a href="#">Cheques propios</a></li>
         
       </ol>
@@ -112,13 +129,29 @@
                   <td><?php echo $cheques[$i]['id'];?></td>
                   <td>
                   <div class="btn-group">
-                  <button type="button" class="btn btn-success btn-xs"><?php echo $cheques[$i]['estado'];?></button>
+                    <?php if ($cheques[$i]['estado']== "CUBRIR") { ?>
+                  <button type="button" class="btn btn-success btn-xs" id="estado"><?php echo $cheques[$i]['estado'];?></button>
                   <button type="button" class="btn btn-success dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
+                    <?php } ?>
+                    <?php if ($cheques[$i]['estado']== "ANULADO") { ?>
+                  <button type="button" class="btn btn-warning btn-xs" id="estado"><?php echo $cheques[$i]['estado'];?></button>
+                  <button type="button" class="btn btn-warning dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
+                    <?php } ?>
+                    <?php if ($cheques[$i]['estado']== "VENCIDO") { ?>
+                  <button type="button" class="btn btn-danger btn-xs" id="estado"><?php echo $cheques[$i]['estado'];?></button>
+                  <button type="button" class="btn btn-danger dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
+                    <?php } ?>
+                    <?php if ($cheques[$i]['estado']== "PAGADO") { ?>
+                    <button type="button" class="btn btn-info btn-xs" id="estado"><?php echo $cheques[$i]['estado'];?></button>
+                    <button type="button" class="btn btn-info dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
+                  <?php } ?>
+
+
                     <span class="caret"></span>
                     <span class="sr-only">Opciones</span>
                   </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Editar</a></li>
+                  <ul class="dropdown-menu" role="menu" onclick="lang1(event);">
+                    <li><a href="<?php echo base_url() ?>Welcome/editar_cheque_propio/<?php echo $cheques[$i]['id']; ?>">Editar</a></li>
                     <li><a href="#">Depositar</a></li>
                     <li><a href="#">Pagar</a></li>
                     <li><a href="#">Rechazar</a></li>
@@ -222,5 +255,7 @@
         })
   })
 </script>
+
+
 </body>
 </html>
