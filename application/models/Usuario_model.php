@@ -13,7 +13,7 @@ public function __construct()
 
 public function login($username, $password){
 
-$this->db->where('email', $username);
+$this->db->where('username', $username);
 $this->db->where('password', $password);
 $q = $this->db->get('usuario');
 if ($q->num_rows()>0)
@@ -34,7 +34,7 @@ function crear_usuario($data){
 
 public function obtener_usuario($username){
 
-$this->db->where('email', $username);
+$this->db->where('username', $username);
 $q = $this->db->get('usuario');
 if ($q->num_rows() >0 ) return $q;//->result();
 }

@@ -63,7 +63,7 @@
               <div class="box-footer">
                 <center>
                 <a class="btn btn-success" href="<?=base_url()?>">Cancelar</a>
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="submit" disabled class="btn btn-primary">Guardar</button>
               </center>
               </div>
             </form>

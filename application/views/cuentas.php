@@ -91,7 +91,7 @@
                   </button>
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="<?php echo base_url() ?>Welcome/editar_cuenta/<?php echo $cuentas[$i]['id']; ?>">Editar</a></li>
-                    <li><a href="<?php echo base_url() ?>Cheque/eliminar_cuenta/<?php echo $cuentas[$i]['id']; ?>">Eliminar</a></li>
+                    <li><a href="<?php echo base_url() ?>Cheque/eliminar_cuenta/<?php echo $cuentas[$i]['id']; ?>/<?php echo $cuentas[$i]['nombre']; ?>">Eliminar</a></li>
                   </ul>
                 </div>
                 </td>

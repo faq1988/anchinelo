@@ -107,11 +107,13 @@
                 <tr>
                    <th>ID</th>
                   <th>Estado</th>
+                  <th>Fecha de salida</th>
                   <th>Fecha de cheque</th>
                   <th>Fecha de pago</th>                  
                   <th>Chequera</th>
                   <th>Titular</th>
                   <th>Nro de cheque</th>
+                  <th>Nro de factura</th>
                   <th>Monto</th>
                   <th>Banco</th>
                   <th>Proveedor</th>
@@ -152,19 +154,22 @@
                   </button>
                   <ul class="dropdown-menu" role="menu" onclick="lang1(event);">
                     <li><a href="<?php echo base_url() ?>Welcome/editar_cheque_propio/<?php echo $cheques[$i]['id']; ?>">Editar</a></li>
-                    <li><a href="#">Depositar</a></li>
-                    <li><a href="#">Pagar</a></li>
-                    <li><a href="#">Rechazar</a></li>
+                    <li><a href="<?php echo base_url() ?>Cheque/estado_cheque_propio/<?php echo $cheques[$i]['id']; ?>/CUBRIR">CUBRIR</a></li>
+                    <li><a href="<?php echo base_url() ?>Cheque/estado_cheque_propio/<?php echo $cheques[$i]['id']; ?>/PAGADO">PAGADO</a></li>
+                    <li><a href="<?php echo base_url() ?>Cheque/estado_cheque_propio/<?php echo $cheques[$i]['id']; ?>/ANULADO">ANULADO</a></li>
+                    <li><a href="<?php echo base_url() ?>Cheque/estado_cheque_propio/<?php echo $cheques[$i]['id']; ?>/VENCIDO">VENCIDO</a></li>
                     <li class="divider"></li>
                     <li><a href="<?php echo base_url() ?>Cheque/eliminar_cheque/<?php echo $cheques[$i]['id']; ?>">Eliminar</a></li>
                   </ul>
                 </div>
                 </td>
+                  <td><?php echo $cheques[$i]['fecha_salida'];?></td>
                   <td><?php echo $cheques[$i]['fecha_cheque'];?></td>
                   <td><?php echo $cheques[$i]['fecha_pago'];?></td>
                   <td><?php echo $cheques[$i]['chequera'];?></td>
                   <td><?php echo $cheques[$i]['titular'];?></td>
                   <td><?php echo $cheques[$i]['nro_cheque'];?></td>
+                  <td><?php echo $cheques[$i]['nro_factura'];?></td>
                   <td>$ <?php echo $cheques[$i]['monto'];?></td>
                   <td><?php echo $cheques[$i]['banco_emision'];?></td>
                   <td><?php echo $cheques[$i]['proveedor'];?></td>

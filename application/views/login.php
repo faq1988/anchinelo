@@ -35,12 +35,25 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
+
+       <?php if ($this->session->flashdata('error')) {?>
+              <div class="alert alert-danger">                                
+                <?php echo $this->session->flashdata('error');?>
+              </div>
+          <?php } ?>    
+          <?php if ($this->session->flashdata('success')) {?>
+              <div class="alert alert-success">                               
+                <?php echo $this->session->flashdata('success');?>
+              </div>
+          <?php } ?>    
+
+          
     <p class="login-box-msg">Ingresar al sistema</p>
 
     <!--form action="../../index2.html" method="post"-->
       <?php echo form_open('Login'); ?>
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Usuario" name="username">
+        <input type="text" class="form-control" placeholder="Usuario" name="username">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">

@@ -50,6 +50,7 @@ class Welcome extends CI_Controller {
 
 	$cant_cheques_a_vencer=  $this->cheque_model->cant_cheques_a_vencer($begin_date, $end_date);
 	$cheques_a_vencer=  $this->cheque_model->obtener_cheques_a_vencer($begin_date, $end_date);
+	$cheques_a_ingresar=  $this->cheque_model->obtener_cheques_a_ingresar($begin_date, $end_date);
 
 	$begin_date = date( 'Y-m-d', strtotime( '-7 day' ) );
     $end_date = date( 'Y-m-d', strtotime( 'today' ) );
@@ -64,6 +65,8 @@ class Welcome extends CI_Controller {
 
     if (isset($cheques_a_vencer))
     $data['cheques_a_vencer']= $cheques_a_vencer->result_array();
+	if (isset($cheques_a_ingresar))
+    $data['cheques_a_ingresar']= $cheques_a_ingresar->result_array();
 
     $this->load->view('header');
 	$this->load->view('menu');
@@ -520,6 +523,37 @@ class Welcome extends CI_Controller {
   }
 
 
+
+
+ public function editar_cheque_terceros()
+  {
+  	if (!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }
+    $data=array();
+	$this->load->model('cheque_model');
+ 	$id_cheque = $this->uri->segment(3);           
+    $cheque = $this->cheque_model->obtener_cheque_terceros($id_cheque);
+   	$lista_clientes=  $this->cheque_model->obtener_clientes();
+    $lista_bancos=  $this->cheque_model->obtener_bancos();
+    $lista_cuentas= $this->cheque_model->obtener_cuentas();
+
+    if (isset($lista_clientes))
+    	$data['clientes']= $lista_clientes->result_array();
+    if (isset($lista_bancos))
+    	$data['bancos']= $lista_bancos->result_array();
+    if (isset($lista_cuentas))
+    	$data['cuentas']= $lista_cuentas->result_array();
+	if (isset($cheque))
+    	$data['cheque']= $cheque->result_array();
+
+
+    
+     $this -> load -> view('header');
+     $this -> load -> view('menu');
+	 $this -> load -> view('editar_cheque_terceros', $data);
+  }
 
 
 }

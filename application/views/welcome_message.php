@@ -144,10 +144,7 @@
                   <td>$ <?php echo $cheques_a_vencer[$i]['monto'];?></td>
                   <td><?php echo $cheques_a_vencer[$i]['banco_emision'];?></td>
                   <td><?php echo $cheques_a_vencer[$i]['proveedor'];?></td>
-                  <td>
-                                <a href="<?php echo base_url() ?>Cheque/eliminar_cheque/<?php echo $cheques_a_vencer[$i]['id']; ?>"> <i title="Eliminar" class="fa fa-fw fa-trash-o"></i></a>
-                                
-                              </td>
+                
                 </tr>
                 <?php } }?>
 
@@ -156,13 +153,66 @@
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="tab_2">
-                The European languages are members of the same family. Their separate existence is a myth.
-                For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                new common language would be desirable: one could refuse to pay expensive translators. To
-                achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                words. If several languages coalesce, the grammar of the resulting language is more simple
-                and regular than that of the individual languages.
+                <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tbody>
+                  <tr>
+                  <th>ID</th>
+                  <th>Estado</th>
+                  <th>Fecha de ingreso</th>
+                  <th>Fecha de cheque</th>
+                  <th>Fecha de depósito</th>                                    
+                  <th>Titular</th>
+                  <th>Nro de cheque</th>
+                  <th>Monto</th>
+                  <th>Banco</th>
+                  <th>Cliente</th>
+                  <th>Nro factura</th>
+                  <th>Depositar en</th>
+
+                </tr>
+
+                 <?php
+                    if (isset($cheques_a_ingresar)){
+                     for($i=0; $i<count($cheques_a_ingresar); $i++){ 
+                  ?>
+
+                <tr>
+                  <td><?php echo $cheques_a_ingresar[$i]['id'];?></td>
+
+                <td>
+                  <div class="btn-group">
+                  <button type="button" class="btn btn-success btn-xs"><?php echo $cheques_a_ingresar[$i]['estado'];?></button>
+                  <!--button type="button" class="btn btn-success dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Opciones</span>
+                  </button-->
+                  <!--ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Editar</a></li>
+                    <li><a href="#">Depositar</a></li>
+                    <li><a href="#">Pagar</a></li>
+                    <li><a href="#">Rechazar</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Eliminar</a></li>
+                  </ul-->
+                </div>
+                </td>                  
+                <td><?php echo $cheques_a_ingresar[$i]['fecha_ingreso'];?></td>
+                  <td><?php echo $cheques_a_ingresar[$i]['fecha_cheque'];?></td>
+                  <td><?php echo $cheques_a_ingresar[$i]['fecha_deposito'];?></td>                  
+                  <td><?php echo $cheques_a_ingresar[$i]['titular'];?></td>
+                  <td><?php echo $cheques_a_ingresar[$i]['nro_cheque'];?></td>
+                  <td>$ <?php echo $cheques_a_ingresar[$i]['monto'];?></td>
+                  <td><?php echo $cheques_a_ingresar[$i]['banco_emision'];?></td>
+                  <td><?php echo $cheques_a_ingresar[$i]['cliente'];?></td>
+                  <td><?php echo $cheques_a_ingresar[$i]['nro_factura'];?></td>
+                  <td><?php echo $cheques_a_ingresar[$i]['depositar_en'];?></td>                  
+                
+                </tr>
+                <?php } }?>
+
+              </tbody></table>
+            </div>
               </div>
               <!-- /.tab-pane -->
              

@@ -32,7 +32,8 @@ public function __construct()
           }
           else
           {
-            redirect('login');
+            $this->session->set_flashdata('error', 'Usuario o contraseña incorrectos');
+            redirect('login'); 
           }       
 
     }

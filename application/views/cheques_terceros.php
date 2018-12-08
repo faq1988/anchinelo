@@ -1,5 +1,19 @@
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+
+
+      <?php if ($this->session->flashdata('error')) {?>
+              <div class="alert alert-danger">                                
+                <?php echo $this->session->flashdata('error');?>
+              </div>
+          <?php } ?>    
+          <?php if ($this->session->flashdata('success')) {?>
+              <div class="alert alert-success">                               
+                <?php echo $this->session->flashdata('success');?>
+              </div>
+          <?php } ?>    
+
+
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -90,14 +104,16 @@
                 <tr>
                    <th>ID</th>
                   <th>Estado</th>
+                  <th>Fecha de ingreso</th>
                   <th>Fecha de cheque</th>
-                  <th>Fecha de pago</th>                  
-                  
+                  <th>Fecha de deposito</th>
                   <th>Titular</th>
                   <th>Nro de cheque</th>
+                  <th>Nro de factura</th>
                   <th>Monto</th>
                   <th>Banco</th>
-                  <th>Proveedor</th>
+                  <th>Cliente</th>
+                  <th>Depositar en</th>
                   
                 </tr>
                 </thead>
@@ -112,29 +128,46 @@
                   <td><?php echo $cheques[$i]['id'];?></td>
                   <td>
                   <div class="btn-group">
-                  <button type="button" class="btn btn-success btn-xs"><?php echo $cheques[$i]['estado'];?></button>
+                   <?php if ($cheques[$i]['estado']== "COBRAR") { ?>
+                  <button type="button" class="btn btn-success btn-xs" id="estado"><?php echo $cheques[$i]['estado'];?></button>
                   <button type="button" class="btn btn-success dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
+                    <?php } ?>
+                    <?php if ($cheques[$i]['estado']== "ANULADO") { ?>
+                  <button type="button" class="btn btn-warning btn-xs" id="estado"><?php echo $cheques[$i]['estado'];?></button>
+                  <button type="button" class="btn btn-warning dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
+                    <?php } ?>
+                    <?php if ($cheques[$i]['estado']== "VENCIDO") { ?>
+                  <button type="button" class="btn btn-danger btn-xs" id="estado"><?php echo $cheques[$i]['estado'];?></button>
+                  <button type="button" class="btn btn-danger dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
+                    <?php } ?>
+                    <?php if ($cheques[$i]['estado']== "COBRADO") { ?>
+                    <button type="button" class="btn btn-info btn-xs" id="estado"><?php echo $cheques[$i]['estado'];?></button>
+                    <button type="button" class="btn btn-info dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
+                  <?php } ?>
                     <span class="caret"></span>
                     <span class="sr-only">Opciones</span>
                   </button>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Editar</a></li>
-                    <li><a href="#">Depositar</a></li>
-                    <li><a href="#">Pagar</a></li>
-                    <li><a href="#">Rechazar</a></li>
+                    <li><a href="<?php echo base_url() ?>Welcome/editar_cheque_terceros/<?php echo $cheques[$i]['id']; ?>">Editar</a></li>
+                    <li><a href="<?php echo base_url() ?>Cheque/estado_cheque_terceros/<?php echo $cheques[$i]['id']; ?>/COBRAR">COBRAR</a></li>
+                    <li><a href="<?php echo base_url() ?>Cheque/estado_cheque_terceros/<?php echo $cheques[$i]['id']; ?>/VENCIDO">VENCIDO</a></li>
+                    <li><a href="<?php echo base_url() ?>Cheque/estado_cheque_terceros/<?php echo $cheques[$i]['id']; ?>/ANULADO">ANULADO</a></li>
+                    <li><a href="<?php echo base_url() ?>Cheque/estado_cheque_terceros/<?php echo $cheques[$i]['id']; ?>/COBRADO">COBRADO</a></li>
                     <li class="divider"></li>
-                    <li><a href="<?php echo base_url() ?>Cheque/eliminar_cheque/<?php echo $cheques[$i]['id']; ?>">Eliminar</a></li>
+                    <li><a href="<?php echo base_url() ?>Cheque/eliminar_cheque_terceros/<?php echo $cheques[$i]['id']; ?>">Eliminar</a></li>
                   </ul>
                 </div>
                 </td>
+                  <td><?php echo $cheques[$i]['fecha_ingreso'];?></td>
                   <td><?php echo $cheques[$i]['fecha_cheque'];?></td>
-                  <td><?php echo $cheques[$i]['fecha_deposito'];?></td>
-                  
+                  <td><?php echo $cheques[$i]['fecha_deposito'];?></td>                  
                   <td><?php echo $cheques[$i]['titular'];?></td>
                   <td><?php echo $cheques[$i]['nro_cheque'];?></td>
+                  <td><?php echo $cheques[$i]['nro_factura'];?></td>
                   <td>$ <?php echo $cheques[$i]['monto'];?></td>
                   <td><?php echo $cheques[$i]['banco_emision'];?></td>
                   <td><?php echo $cheques[$i]['cliente'];?></td>
+                  <td><?php echo $cheques[$i]['depositar_en'];?></td>
                   
                 </tr>
 

@@ -62,7 +62,7 @@ if ($q->num_rows() >0 ) return $q;//->result();
 
 
 public function obtener_cheques(){
-$this->db->select('ch.id as id, ch.estado as estado, ch.fecha_cheque, ch.fecha_pago, k.descripcion as chequera, g.titular, ch.nro_cheque, ch.monto, b.nombre as banco_emision, p.nombre_apellido as proveedor');
+$this->db->select('ch.id as id, ch.estado as estado, ch.fecha_salida, ch.fecha_cheque, ch.fecha_pago, k.descripcion as chequera, g.titular, ch.nro_cheque, ch.nro_factura, ch.monto, b.nombre as banco_emision, p.nombre_apellido as proveedor');
 $this->db->from('cheque_propio ch');
 $this->db->join('chequera k', 'k.id = ch.chequera');
 $this->db->join('cuenta g', 'g.id = k.cuenta');
@@ -75,11 +75,12 @@ if ($q->num_rows() >0 ) return $q;//->result();
 
 
 public function obtener_cheques_terceros(){
-$this->db->select('ch.id as id, ch.estado as estado, ch.fecha_cheque, ch.fecha_deposito, g.titular, ch.nro_cheque, ch.monto, b.nombre as banco_emision, p.nombre_apellido as cliente');
+$this->db->select('ch.id as id, ch.estado as estado, ch.fecha_ingreso, ch.fecha_cheque, ch.fecha_deposito, ch.titular, ch.nro_cheque, ch.monto, b.nombre as banco_emision, 
+	p.nombre_apellido as cliente, ch.nro_factura, g.nombre as depositar_en');
 $this->db->from('cheque_terceros ch');
 
 $this->db->join('cuenta g', 'g.id = ch.depositar_en');
-$this->db->join('banco b', 'b.id = g.banco');
+$this->db->join('banco b', 'b.id = ch.banco_emision');
 $this->db->join('cliente p', 'p.id = ch.cliente');
 $q = $this->db->get('');
 //$q = $this->db->get('cheque_propio');
@@ -87,10 +88,41 @@ if ($q->num_rows() >0 ) return $q;//->result();
 }
 
 
+public function obtener_cheque_terceros($id){
+
+$this->db->select('ch.id as id, ch.estado as estado, ch.fecha_ingreso, ch.fecha_cheque, ch.fecha_deposito, g.titular, ch.nro_factura, ch.nro_cheque, ch.monto, b.id as banco_emision, p.id as cliente,
+	ch.depositar_en');
+$this->db->from('cheque_terceros ch');
+$this->db->join('cuenta g', 'g.id = ch.depositar_en');
+$this->db->join('banco b', 'b.id = g.banco');
+$this->db->join('cliente p', 'p.id = ch.cliente');
+$this->db->where('ch.id', $id);
+$q = $this->db->get('');
+//$q = $this->db->get('cheque_propio');
+if ($q->num_rows() >0 ) return $q;//->result();
+
+}
+
+
 function eliminar_cheque($id)
 	{
 		$this->db->where('id =', $id);
 		$this->db->delete('cheque_propio');
+
+		$errors = $this->db->error();
+		//error 1451: significa que no se pudo eliminar la entidad por problemas de foreign key
+		return $errors['code'];	
+	}
+
+
+function eliminar_cheque_terceros($id)
+	{
+		$this->db->where('id =', $id);
+		$this->db->delete('cheque_terceros');
+
+		$errors = $this->db->error();
+		//error 1451: significa que no se pudo eliminar la entidad por problemas de foreign key
+		return $errors['code'];	
 	}
 
 
@@ -118,6 +150,10 @@ function eliminar_chequera($id)
 	{
 		$this->db->where('id =', $id);
 		$this->db->delete('chequera');
+
+		$errors = $this->db->error();
+		//error 1451: significa que no se pudo eliminar la entidad por problemas de foreign key
+		return $errors['code'];	
 	}
 
 
@@ -143,6 +179,10 @@ function eliminar_cliente($id)
 	{
 		$this->db->where('id =', $id);
 		$this->db->delete('cliente');
+
+		$errors = $this->db->error();
+		//error 1451: significa que no se pudo eliminar la entidad por problemas de foreign key
+		return $errors['code'];	
 	}
 
 
@@ -161,6 +201,10 @@ function eliminar_proveedor($id)
 	{
 		$this->db->where('id =', $id);
 		$this->db->delete('proveedor');
+
+		$errors = $this->db->error();
+		//error 1451: significa que no se pudo eliminar la entidad por problemas de foreign key
+		return $errors['code'];	
 	}		
 
 
@@ -253,6 +297,23 @@ function cant_cheques_a_vencer($begin_date, $end_date){
 	$q = $this->db->get('');
 	if ($q->num_rows() >0 ) return $q;//->result();
 	}
+
+
+  public function obtener_cheques_a_ingresar($begin_date, $end_date){
+	$this->db->select('ch.id as id, ch.estado as estado, ch.fecha_ingreso, ch.fecha_cheque, ch.fecha_deposito, ch.titular, ch.nro_cheque, ch.monto, b.nombre as banco_emision, 
+	p.nombre_apellido as cliente, ch.nro_factura, g.nombre as depositar_en');
+	$this->db->from('cheque_terceros ch');
+	$this->db->join('cuenta g', 'g.id = ch.depositar_en');
+	$this->db->join('banco b', 'b.id = ch.banco_emision');
+	$this->db->join('cliente p', 'p.id = ch.cliente');
+	$this->db->where('ch.fecha_deposito >=', $begin_date);
+	$this->db->where('ch.fecha_deposito <=', $end_date);    	
+	$this->db->where('estado', "COBRAR");
+	$q = $this->db->get('');
+	if ($q->num_rows() >0 ) return $q;//->result();
+	}
+
+
 
 
 //en los ultimos 7 dias
@@ -379,9 +440,45 @@ public function editar_cheque_propio($id, $data)
 	$this->db->set('nota', $data['nota']);	
 	$this->db->where('id', $id);
 	$this->db->update('cheque_propio');	
+}
 
 
 
+public function editar_cheque_terceros($id, $data)
+{
+	$this->db->set('fecha_ingreso', $data['fecha_ingreso']);
+	$this->db->set('fecha_cheque', $data['fecha_cheque']);
+	$this->db->set('fecha_deposito', $data['fecha_deposito']);	
+	$this->db->set('titular', $data['titular']);	
+	$this->db->set('nro_cheque', $data['nro_cheque']);	
+	$this->db->set('monto', $data['monto']);	
+	$this->db->set('banco_emision', $data['banco_emision']);	
+	$this->db->set('cliente', $data['cliente']);	
+	$this->db->set('depositar_en', $data['depositar_en']);	
+	$this->db->set('nro_factura', $data['nro_factura']);	
+	$this->db->set('nota', $data['nota']);	
+	$this->db->where('id', $id);
+	$this->db->update('cheque_terceros');	
+}
+
+
+
+
+public function estado_cheque_propio($id, $estado)
+{
+	$this->db->set('estado', $estado);
+	$this->db->where('id', $id);
+	$this->db->update('cheque_propio');	
+}
+
+
+
+
+public function estado_cheque_terceros($id, $estado)
+{
+	$this->db->set('estado', $estado);
+	$this->db->where('id', $id);
+	$this->db->update('cheque_terceros');	
 }
 /*
 function cambiar_password($username, $password)

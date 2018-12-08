@@ -126,8 +126,38 @@ public function __construct()
   public function eliminar_cheque()
   {
     $id_cheque = $this->uri->segment(3);       
-    $this->cheque_model->eliminar_cheque($id_cheque);
+    $error_code = $this->cheque_model->eliminar_cheque($id_cheque);
+
+    //problema de foreign key
+    if ($error_code == 1451)
+    {
+      $this->session->set_flashdata('error', 'No es posible eliminar el cheque, el mismo está siendo utilizado');
+    }
+    else
+    {
+      $this->session->set_flashdata('success', 'El cheque '.$id_cheque.' fue eliminado con éxito'); 
+    }
+
     redirect('Welcome/cheques_propios');
+  }
+
+
+    public function eliminar_cheque_terceros()
+  {
+    $id_cheque = $this->uri->segment(3);       
+    $error_code = $this->cheque_model->eliminar_cheque_terceros($id_cheque);
+
+    //problema de foreign key
+    if ($error_code == 1451)
+    {
+      $this->session->set_flashdata('error', 'No es posible eliminar el cheque, el mismo está siendo utilizado');
+    }
+    else
+    {
+      $this->session->set_flashdata('success', 'El cheque '.$id_cheque.' fue eliminado con éxito'); 
+    }
+
+    redirect('Welcome/cheques_terceros');
   }
 
 
@@ -135,7 +165,21 @@ public function __construct()
    public function eliminar_chequera()
   {
     $id_chequera = $this->uri->segment(3);       
-    $this->cheque_model->eliminar_chequera($id_chequera);
+    $error_code = $this->cheque_model->eliminar_chequera($id_chequera);
+
+    $chequera = $this->cheque_model->obtener_chequera($id_chequera)->result_array();
+
+    //problema de foreign key
+    if ($error_code == 1451)
+    {
+      $this->session->set_flashdata('error', 'No es posible eliminar la chequera '.$chequera[0]['descripcion'].', la misma está siendo utilizada');
+    }
+    else
+    {
+      $this->session->set_flashdata('success', 'La chequera '.$chequera[0]['descripcion'].' fue eliminada con éxito'); 
+    }
+
+
     redirect('Welcome/chequeras');
   }
 
@@ -184,7 +228,20 @@ public function __construct()
    public function eliminar_cliente()
   {
     $id_cliente = $this->uri->segment(3);       
-    $this->cheque_model->eliminar_cliente($id_cliente);
+    $error_code = $this->cheque_model->eliminar_cliente($id_cliente);
+
+    $cliente = $this->cheque_model->obtener_cliente($id_cliente)->result_array();
+
+    //problema de foreign key
+    if ($error_code == 1451)
+    {
+      $this->session->set_flashdata('error', 'No es posible eliminar el cliente '.$cliente[0]['nombre_apellido'].', el mismo está siendo utilizado');
+    }
+    else
+    {
+      $this->session->set_flashdata('success', 'El cliente '.$cliente[0]['nombre_apellido'].' fue eliminado con éxito'); 
+    }
+
     redirect('Welcome/clientes');
   }
 
@@ -224,7 +281,19 @@ public function __construct()
     public function eliminar_proveedor()
   {
     $id_proveedor = $this->uri->segment(3);       
-    $this->cheque_model->eliminar_proveedor($id_proveedor);
+    $error_code = $this->cheque_model->eliminar_proveedor($id_proveedor);
+
+    $proveedor= $this->cheque_model->obtener_proveedor($id_proveedor)->result_array();
+
+    //problema de foreign key
+    if ($error_code == 1451)
+    {
+      $this->session->set_flashdata('error', 'No es posible eliminar el proveedor '.$proveedor[0]['nombre_apellido'].', el mismo está siendo utilizado');
+    }
+    else
+    {
+      $this->session->set_flashdata('success', 'El proveedor '.$proveedor[0]['nombre_apellido'].' fue eliminado con éxito'); 
+    }
     redirect('Welcome/proveedores');
   }
 
@@ -265,17 +334,19 @@ public function __construct()
    public function eliminar_cuenta()
   {
 
-    $id_cuenta = $this->uri->segment(3);           
+    $id_cuenta = $this->uri->segment(3);               
     $error_code = $this->cheque_model->eliminar_cuenta($id_cuenta);
+
+    $cuenta= $this->cheque_model->obtener_cuenta($id_cuenta)->result_array();
 
     //problema de foreign key
     if ($error_code == 1451)
     {
-      $this->session->set_flashdata('error', 'No es posible eliminar la cuenta, la misma está siendo utilizada');
+      $this->session->set_flashdata('error', 'No es posible eliminar la cuenta '.$cuenta[0]['nombre'].', la misma está siendo utilizada');
     }
     else
     {
-      $this->session->set_flashdata('success', 'La cuenta fue eliminada con éxito'); 
+      $this->session->set_flashdata('success', 'La cuenta '.$cuenta[0]['nombre'].' fue eliminada con éxito'); 
     }
 
     redirect('Welcome/cuentas');
@@ -572,5 +643,106 @@ public function __construct()
       }
 
   }
+
+
+
+
+
+
+ public function editar_cheque_terceros()
+  {
+
+    $id_cheque_terceros = $this->uri->segment(3);  
+
+      $this->form_validation->set_rules('fecha_ingreso', 'Fecha de ingreso', 'required');
+      $this->form_validation->set_rules('fecha_cheque', 'Fecha de cheque', 'required');
+      $this->form_validation->set_rules('fecha_deposito', 'Fecha de depósito', 'required');
+      $this->form_validation->set_rules('titular', 'Titular', 'required');
+      $this->form_validation->set_rules('nro_cheque', 'Número de cheque', 'required');
+      $this->form_validation->set_rules('monto', 'Monto', 'required|numeric|greater_than[0]');
+      $this->form_validation->set_rules('banco_emision', 'Banco', 'required');
+      $this->form_validation->set_rules('cliente', 'Cliente', 'required');
+      $this->form_validation->set_rules('nro_factura', 'Número de factura', 'required');
+      $this->form_validation->set_rules('depositar_en', 'Depositar en', 'required');
+      
+      if ($this->form_validation->run() == FALSE)      
+      {                   
+        
+        $data=array();               
+        $cheque_terceros = $this->cheque_model->obtener_cheque_terceros($id_cheque_terceros);
+
+        $lista_clientes=  $this->cheque_model->obtener_clientes();
+        $lista_bancos=  $this->cheque_model->obtener_bancos();
+        $lista_cuentas= $this->cheque_model->obtener_cuentas();
+
+         if (isset($lista_clientes))
+            $data['clientes']= $lista_clientes->result_array();
+         if (isset($lista_bancos))
+            $data['bancos']= $lista_bancos->result_array();
+         if (isset($lista_cuentas))
+            $data['cuentas']= $lista_cuentas->result_array();
+        if (isset($cheque_terceros))
+          $data['cheque_terceros']= $cheque_terceros->result_array();
+        
+          $this -> load -> view('header');
+          $this -> load -> view('menu');
+          $this -> load -> view('editar_cheque_terceros', $data);
+      } 
+      else
+      {
+        $data = array(
+      'fecha_ingreso' => $this->input->post('fecha_ingreso'),
+      'fecha_cheque' => $this->input->post('fecha_cheque'),
+      'fecha_deposito' => $this->input->post('fecha_deposito'),      
+      'titular' => $this->input->post('titular'),
+      'nro_cheque' => $this->input->post('nro_cheque'),      
+      'monto' => $this->input->post('monto'),
+      'banco_emision' => $this->input->post('banco_emision'),
+      'cliente' => $this->input->post('cliente'),      
+      'depositar_en' => $this->input->post('depositar_en'),
+      'nro_factura' => $this->input->post('nro_factura'),      
+      'nota' => $this->input->post('nota'),
+      //'estado' => "COBRAR",
+      );
+
+
+        $this->cheque_model->editar_cheque_terceros($id_cheque_terceros, $data);
+        $this->session->set_flashdata('success', 'El cheque "'. $id_cheque_terceros .'" fue modificado con éxito');
+        redirect("welcome/cheques_terceros");
+      }
+
+  }
+
+
+
+
+
+
+ public function estado_cheque_propio()
+  {
+
+    $id_cheque_propio = $this->uri->segment(3);
+    $estado = $this->uri->segment(4);  
+
+    $this->cheque_model->estado_cheque_propio($id_cheque_propio, $estado);
+    $this->session->set_flashdata('success', 'El estado del cheque "'. $id_cheque_propio .'" fue modificado con éxito');
+    redirect("welcome/cheques_propios");
+      
+  }
+
+
+
+ public function estado_cheque_terceros()
+  {
+
+    $id_cheque_terceros = $this->uri->segment(3);
+    $estado = $this->uri->segment(4);  
+
+    $this->cheque_model->estado_cheque_terceros($id_cheque_terceros, $estado);
+    $this->session->set_flashdata('success', 'El estado del cheque "'. $id_cheque_terceros .'" fue modificado con éxito');
+    redirect("welcome/cheques_terceros");
+      
+  }
+  
 
 }
