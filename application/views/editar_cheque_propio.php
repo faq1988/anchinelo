@@ -5,12 +5,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Nuevo cheque propio
+        Editar cheque propio
         
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Nuevo cheque propio</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Transporte JyG</a></li>
+        <li class="active">Editar cheque propio</li>
       </ol>
     </section>
 
@@ -20,11 +20,11 @@
       <!-- Main row -->
       <div class="row">
 
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-8 col-md-offset-2">
 
         <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Nuevo cheque propio</h3>
+              <h3 class="box-title">Editar cheque propio</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -163,10 +163,19 @@
                 <div class="row">
                 <div class="col-md-12">
                 <div class="col-md-3">
+
+              
+
+
                 <div class="form-group">
                   <label for="exampleInputEmail1">Monto</label>
-                  <input class="form-control" id="monto" name="monto" placeholder="Monto" type="text"
-                  value="<?php echo $cheque[0]['monto']; ?>">
+                  <div class="input-group">
+                    <span class="input-group-addon">$</span>
+                    <input type="number" step="0.01" class="form-control" id="monto" name="monto" placeholder="Monto"
+                      value="<?php echo $cheque[0]['monto']; ?>">                
+                  </div>
+                  <!--input class="form-control" id="monto" name="monto" placeholder="Monto" type="text"
+                  value="<?php echo $cheque[0]['monto']; ?>"-->
                   <?php echo form_error('monto', '<span style="color:red">', '</span>'); ?>
                 </div>
               </div>

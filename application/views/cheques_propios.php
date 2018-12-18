@@ -102,7 +102,8 @@
             
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
+              <div style="overflow-x: auto;">
+              <table id="example1" class="table table-bordered table-striped" style="white-space:nowrap;">
                 <thead>
                 <tr>
                    <th>ID</th>
@@ -132,25 +133,30 @@
                   <td>
                   <div class="btn-group">
                     <?php if ($cheques[$i]['estado']== "CUBRIR") { ?>
-                  <button type="button" class="btn btn-success btn-xs" id="estado"><?php echo $cheques[$i]['estado'];?></button>
-                  <button type="button" class="btn btn-success dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
+                   <button type="button" class="btn btn-success dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <?php echo $cheques[$i]['estado'];?>
+                  <span class="caret"></span>
+                  </button>
                     <?php } ?>
                     <?php if ($cheques[$i]['estado']== "ANULADO") { ?>
-                  <button type="button" class="btn btn-warning btn-xs" id="estado"><?php echo $cheques[$i]['estado'];?></button>
-                  <button type="button" class="btn btn-warning dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
+                   <button type="button" class="btn btn-warning dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <?php echo $cheques[$i]['estado'];?>
+                  <span class="caret"></span>
+                  </button>
                     <?php } ?>
                     <?php if ($cheques[$i]['estado']== "VENCIDO") { ?>
-                  <button type="button" class="btn btn-danger btn-xs" id="estado"><?php echo $cheques[$i]['estado'];?></button>
-                  <button type="button" class="btn btn-danger dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
+                   <button type="button" class="btn btn-danger dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <?php echo $cheques[$i]['estado'];?>
+                  <span class="caret"></span>
+                  </button>
                     <?php } ?>
                     <?php if ($cheques[$i]['estado']== "PAGADO") { ?>
-                    <button type="button" class="btn btn-info btn-xs" id="estado"><?php echo $cheques[$i]['estado'];?></button>
-                    <button type="button" class="btn btn-info dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
+                     <button type="button" class="btn btn-info dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <?php echo $cheques[$i]['estado'];?>
+                  <span class="caret"></span>
+                  </button>
                   <?php } ?>
 
-
-                    <span class="caret"></span>
-                    <span class="sr-only">Opciones</span>
                   </button>
                   <ul class="dropdown-menu" role="menu" onclick="lang1(event);">
                     <li><a href="<?php echo base_url() ?>Welcome/editar_cheque_propio/<?php echo $cheques[$i]['id']; ?>">Editar</a></li>
@@ -193,6 +199,7 @@
                 </tr>
                 </tfoot-->
               </table>
+            </div>
             </div>
             <!-- /.box-body -->
           </div>

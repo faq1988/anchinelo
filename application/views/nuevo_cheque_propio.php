@@ -20,7 +20,7 @@
       <!-- Main row -->
       <div class="row">
 
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-8 col-md-offset-2">
 
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -140,8 +140,13 @@
                 <div class="col-md-3">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Monto</label>
-                  <input class="form-control" id="monto" name="monto" placeholder="Monto" type="text"
-                  value="<?php echo set_value('monto'); ?>">
+                   <div class="input-group">
+                    <span class="input-group-addon">$</span>
+                    <input type="number" step="0.01" class="form-control" id="monto" name="monto" placeholder="Monto"
+                      value="<?php echo set_value('monto'); ?>">                
+                  </div>
+                  <!--input class="form-control" id="monto" name="monto" placeholder="Monto" type="text"
+                  value="<?php echo set_value('monto'); ?>"-->
                   <?php echo form_error('monto', '<span style="color:red">', '</span>'); ?>
                 </div>
               </div>

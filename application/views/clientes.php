@@ -54,6 +54,7 @@
             
             <!-- /.box-header -->
             <div class="box-body">
+              <div style="overflow-x: auto;">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -82,10 +83,9 @@
                   
                   <td>
                   <div class="btn-group">
-                  <button type="button" class="btn btn-success btn-xs">Opciones</button>
-                  <button type="button" class="btn btn-success dropdown-toggle btn-xs" data-toggle="dropdown" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">Opciones</span>
+                  <button type="button" class="btn btn-success dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Opciones
+                  <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="<?php echo base_url() ?>Welcome/editar_cliente/<?php echo $clientes[$i]['id']; ?>">Editar</a></li>
@@ -101,6 +101,7 @@
                 </tbody>
               
               </table>
+            </div>
             </div>
             <!-- /.box-body -->
           </div>

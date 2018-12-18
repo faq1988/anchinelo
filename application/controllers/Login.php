@@ -23,8 +23,10 @@ public function __construct()
         $this->load->model('usuario_model');
         if ($this->usuario_model->login($_POST['username'], md5($_POST['password'])))
           {
-            $usuario= $this->usuario_model->obtener_usuario($_POST['username'])->row();            
+            $usuario= $this->usuario_model->obtener_usuario($_POST['username'])->row();                       
             $this->session->set_userdata('username', $_POST['username']);
+            $this->session->set_userdata('nombre_usuario', $usuario->nombre);
+            $this->session->set_userdata('apellido_usuario', $usuario->apellido);
             //$this->session->set_userdata('rol', $usuario->rol);
             //$this->session->set_userdata('nombre_usuario', $usuario->nombre);
             //$this->session->set_userdata('apellido_usuario', $usuario->apellido);

@@ -66,7 +66,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
               <!--img src="<?=base_url()?>assets_template/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"-->
-              <span class="hidden-xs"><i class="fa fa-user"></i> Gladys Anchinelo</span>
+              <span class="hidden-xs"><i class="fa fa-user"></i> Usuario</span>
             </a>
             <ul class="dropdown-menu">
              

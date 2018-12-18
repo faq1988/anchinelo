@@ -281,9 +281,10 @@ public function __construct()
     public function eliminar_proveedor()
   {
     $id_proveedor = $this->uri->segment(3);       
-    $error_code = $this->cheque_model->eliminar_proveedor($id_proveedor);
-
     $proveedor= $this->cheque_model->obtener_proveedor($id_proveedor)->result_array();
+
+    $error_code = $this->cheque_model->eliminar_proveedor($id_proveedor);
+    
 
     //problema de foreign key
     if ($error_code == 1451)
@@ -335,9 +336,11 @@ public function __construct()
   {
 
     $id_cuenta = $this->uri->segment(3);               
+    $cuenta= $this->cheque_model->obtener_cuenta($id_cuenta)->result_array();
+
     $error_code = $this->cheque_model->eliminar_cuenta($id_cuenta);
 
-    $cuenta= $this->cheque_model->obtener_cuenta($id_cuenta)->result_array();
+    
 
     //problema de foreign key
     if ($error_code == 1451)
